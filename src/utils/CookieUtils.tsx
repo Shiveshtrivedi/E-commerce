@@ -16,23 +16,6 @@ interface AddressDetails {
   city: string;
   state: string;
 }
-interface CartItem {
-  id: string;
-  name: string;
-  quantity: number;
-  price: number;
-}
-
-interface WishlistItem {
-  id: string;
-  name: string;
-  price: number;
-}
-
-interface AdminHistoryItem {
-  action: string;
-  timestamp: string;
-}
 
 export const setCookie = (
   name: string,
@@ -119,8 +102,6 @@ export const getAddressFromCookies = (
 
   return address ? JSON.parse(address) : null;
 };
-
-const getUserOrdersKey = (userId: string) => `orders_${userId}`;
 
 export const saveOrdersToCookies = (userId: string, orders: IOrder[]) => {
   Cookies.set(`orders_${userId}`, JSON.stringify(orders), { expires: 7 });

@@ -117,7 +117,7 @@ const ProfilePage: React.FC = () => {
       }
     };
     fetchUserData();
-  }, [user]);
+  }, [user,api_url]);
 
   const handleLogout = () => {
     dispatch(logout());

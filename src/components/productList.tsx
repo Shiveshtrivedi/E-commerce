@@ -7,7 +7,7 @@ import {
   removeProductFromHistory,
   resetFilter,
 } from '../redux/slices/ProductSlice';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Loading from './loading';
 import { addToCart } from '../redux/slices/CartSlice';
@@ -18,7 +18,6 @@ import StarRating from './starRating';
 import { IProduct, IWishListItem } from '../utils/interface/Interface';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import NoProductFound from './noProductFound';
-import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -232,11 +231,6 @@ const WishlistButton = styled.div<{ viewMode: string; isInWishlist: boolean }>`
   }
 `;
 
-const Icon = styled(AiOutlineHeart)`
-  margin-right: 8px;
-  font-size: 20px;
-`;
-
 const ProductList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.products.products);
@@ -255,10 +249,10 @@ const ProductList: React.FC = () => {
   const wishlist = useSelector((state: RootState) => state.wishList.items);
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const category = query.get('category') || 'all';
+  const category = query.get('category') ?? 'all';
   useEffect(() => {
     if (category) {
-      setCategoryFilter(category); // Update category filter based on URL query
+      setCategoryFilter(category);
     }
   }, [category]);
   useEffect(() => {
