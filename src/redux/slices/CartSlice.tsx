@@ -54,6 +54,7 @@ const cartSlice = createSlice({
       );
 
       saveCartToCookies(state.userId, state.items);
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
 
     removeToCart(state, action: PayloadAction<number>) {
@@ -82,6 +83,7 @@ const cartSlice = createSlice({
         );
 
         saveCartToCookies(state.userId, state.items);
+        localStorage.setItem('cart', JSON.stringify(state.items));
       }
     },
 
@@ -93,6 +95,7 @@ const cartSlice = createSlice({
       state.totalItems = 0;
 
       saveCartToCookies(state.userId, state.items);
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
     checkout(state) {
       if (!state.userId) return;
@@ -124,6 +127,7 @@ const cartSlice = createSlice({
       saveOrdersToCookies(state.userId, orders);
 
       saveCartToCookies(state.userId, state.items);
+      localStorage.setItem('cart', JSON.stringify(state.items));
     },
     saveOrder(state, action: PayloadAction<IOrder>) {
       if (!state.userId) return;

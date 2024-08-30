@@ -7,6 +7,7 @@ import { getOrdersFromCookies } from '../utils/CookieUtils';
 
 const HistoryContainer = styled.div`
   max-width: 800px;
+  height: 400px;
   margin: 20px auto;
   padding: 20px;
   background-color: #f9f9f9;
