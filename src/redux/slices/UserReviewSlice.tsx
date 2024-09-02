@@ -5,10 +5,17 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IReview, IReviewsState } from '../../utils/interface/Interface';
+import { IReview } from '../../utils/interface/Interface';
+
+interface IReviewsState {
+  reviews: IReview[];
+  averageRatings: Record<string, number>;
+  error: string | null;
+}
 
 const initialState: IReviewsState = {
   reviews: [],
+  averageRatings: {},
   error: null,
 };
 
@@ -70,6 +77,19 @@ const reviewSlice = createSlice({
         (state, action: PayloadAction<IReview>) => {
           state.reviews.push(action.payload);
           state.error = null;
+
+          const productId = action.payload.productId;
+          const productReviews = state.reviews.filter(
+            (review) => review.productId === productId
+          );
+          const totalRating = productReviews.reduce(
+            (acc, review) => acc + review.rating,
+            0
+          );
+          const averageRating = productReviews.length
+            ? totalRating / productReviews.length
+            : 0;
+          state.averageRatings[productId] = averageRating;
         }
       )
       .addCase(

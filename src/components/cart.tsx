@@ -6,7 +6,6 @@ import {
   clearCart,
   removeToCart,
   checkout,
-  setUserId,
 } from '../redux/slices/CartSlice';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -20,7 +19,7 @@ const CartContainer = styled.div`
   max-width: 600px;
   height: 383px;
   margin: 0 auto;
-  overflow-y: auto; /* Allows scrolling if content overflows */
+  overflow-y: auto;
 
   @media (max-width: 768px) {
     padding: 15px;
@@ -30,7 +29,7 @@ const CartContainer = styled.div`
   @media (max-width: 480px) {
     padding: 10px;
     max-width: 95%;
-    height: auto; /* Adjust height for mobile */
+    height: auto;
   }
 `;
 
@@ -237,14 +236,13 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
-  const userId = useSelector((state: RootState) => state.cart.userId) ?? '';
+  console.log('cartItems in totalAmount ', totalAmount);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckout = async () => {
     setIsLoading(true);
     try {
-      dispatch(setUserId(userId));
       dispatch(checkout());
       toast.success('Checkout successful!');
       navigate('/checkout');

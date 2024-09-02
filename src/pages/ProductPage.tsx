@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/slices/CartSlice';
 import ReviewList from '../components/reviewList';
 import ReviewForm from '../components/reviewForm';
-import StarRating from '../components/starRating';
-import { postReview, fetchReviews } from '../redux/slices/UserReviewSlice';
+import { fetchReviews } from '../redux/slices/UserReviewSlice';
 import { AppDispatch, RootState } from '../redux/Store';
 import { fetchProducts } from '../redux/slices/ProductSlice';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
+import TestStar from '../components/star';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -133,47 +135,13 @@ const ProductPage: React.FC = () => {
     toast.success('Product added to cart');
   };
 
-  const onRatingChange = (value: number) => {
-    setProduct((prevProduct: Product | null) => {
-      if (prevProduct?.rating) {
-        return {
-          ...prevProduct,
-          rating: {
-            ...prevProduct.rating,
-            rate:
-              (prevProduct.rating.rate * prevProduct.rating.count + value) /
-              (prevProduct.rating.count + 1),
-            count: prevProduct.rating.count + 1,
-          },
-        };
-      }
-      return prevProduct;
-    });
-
-    const review = {
-      id: Date.now().toString(),
-      productId: id,
-      userId: 'user1',
-      rating: value,
-      comment: '',
-      timestamp: new Date().toISOString(),
-    };
-
-    if (product?.id) {
-      dispatch(postReview({ ...review, productId: product.id }));
-    }
-  };
-
   return (
     <Container>
-      <Image src={product.image} alt={product.title} />
+      <Zoom>
+        <Image src={product.image} alt={product.title} />
+      </Zoom>
       <Title>{product.title}</Title>
-      {product.rating && (
-        <StarRating
-          rating={product.rating.rate || 0}
-          onRatingChange={onRatingChange}
-        />
-      )}
+      {product.rating && <TestStar reviews={product.rating.rate} />}
       <Price>{product.price}$</Price>
       <Description>{product.description}</Description>
       <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>

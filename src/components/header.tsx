@@ -17,6 +17,7 @@ const HeaderWrapper = styled.header`
   position: relative;
 
   @media (max-width: 768px) {
+    flex-direction: column;
     padding: 20px 15px;
   }
 `;
@@ -29,6 +30,7 @@ const Logo = styled.div`
 
   @media (max-width: 768px) {
     font-size: 20px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -36,10 +38,12 @@ const Nav = styled.nav`
   display: flex;
   gap: 10px;
   flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
+    gap: 15px;
   }
 `;
 
@@ -47,10 +51,11 @@ const SearchBar = styled.input`
   padding: 5px;
   border: 1px solid #cccccc;
   border-radius: 4px;
-  width: 200px;
+  width: 250px;
+  flex-shrink: 0;
 
   @media (max-width: 768px) {
-    width: 150px;
+    width: 80%;
   }
 `;
 
@@ -75,12 +80,17 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const CartContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
 const CartIcon = styled(BsCart)`
   font-size: 33px;
   color: #333333;
   transition: color 0.3s ease;
-  position: absolute;
-  right: 30px;
+  cursor: pointer;
 
   &:hover {
     color: #555555;
@@ -88,25 +98,32 @@ const CartIcon = styled(BsCart)`
 
   @media (max-width: 768px) {
     font-size: 28px;
-    right: 20px;
   }
 `;
 
 const CartItems = styled.span`
   font-size: 16px;
   font-weight: bold;
-  color: #333333;
-  margin-left: 8px;
-  position: relative;
-  top: -7px;
-  background-color: #ffffff;
-  padding: 2px 6px;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-  @media (max-width: 768px) {
+  color: #ffffff;
+  background-color: #dc3545;
+  border-radius: 50%;
+  padding: 4px 8px;
+  position: absolute;
+  top: 33%;
+  right: 17%;
+  box-shadow: 0 2px 4px #00000020;
+  @media (max-width: 480px) {
     font-size: 14px;
-    padding: 1px 5px;
+    padding: 3px 7px;
+    top: 70%;
+    right: 45%;
+  }
+
+  @media ((min-width: 481px) and (max-width: 768px)) {
+    font-size: 14px;
+    padding: 3px 7px;
+    top: 70%;
+    right: 47%;
   }
 `;
 
@@ -147,7 +164,7 @@ const DropdownMenu = styled.div<{ isOpen: boolean }>`
   background-color: #ffffff;
   border: 1px solid #cccccc;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px #00000050;
   width: 200px;
   z-index: 1000;
 

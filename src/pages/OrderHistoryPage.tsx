@@ -6,13 +6,23 @@ import styled from 'styled-components';
 import { getOrdersFromCookies } from '../utils/CookieUtils';
 
 const HistoryContainer = styled.div`
-  max-width: 800px;
-  height: 400px;
-  margin: 20px auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px #00000020;
+  max-width: 800px;
+  margin: 20px auto;
+  height: auto;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    max-width: 95%;
+  }
 `;
 
 const OrderCard = styled.div`
@@ -20,6 +30,14 @@ const OrderCard = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+  }
 `;
 
 const OrderDetails = styled.div`
@@ -29,6 +47,14 @@ const OrderDetails = styled.div`
 const OrderDate = styled.p`
   font-size: 14px;
   color: #777;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 const OrderHistoryPage: React.FC = () => {

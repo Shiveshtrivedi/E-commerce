@@ -4,7 +4,6 @@ import { RootState, AppDispatch } from '../redux/Store';
 import {
   deleteProduct,
   fetchProducts,
-  removeProductFromHistory,
   resetFilter,
 } from '../redux/slices/ProductSlice';
 import { Link, useLocation } from 'react-router-dom';
@@ -14,14 +13,19 @@ import { addToCart } from '../redux/slices/CartSlice';
 import { addToWishList, removeToWishList } from '../redux/slices/WishlistSlice';
 import { toast } from 'react-toastify';
 import { fetchReviews } from '../redux/slices/UserReviewSlice';
-import StarRating from './starRating';
 import { IProduct, IWishListItem } from '../utils/interface/Interface';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import NoProductFound from './noProductFound';
+import TestStar from './star';
+import MyPieChart from './pieChart';
 
 const Container = styled.div`
   display: flex;
   max-width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const FilterBox = styled.div`
@@ -34,6 +38,12 @@ const FilterBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
 `;
 
 const ProductBox = styled.div<{ viewMode: string }>`
@@ -43,6 +53,10 @@ const ProductBox = styled.div<{ viewMode: string }>`
   flex-wrap: wrap;
   align-items: flex-start;
   flex-direction: ${(props) => (props.viewMode === 'grid' ? 'row' : 'column')};
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const FilterDropdown = styled.select`
@@ -53,6 +67,10 @@ const FilterDropdown = styled.select`
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const Image = styled.img`
@@ -61,14 +79,22 @@ const Image = styled.img`
   object-fit: contain;
   margin-bottom: 10px;
   box-shadow: 0 0 10px #00000020;
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 130px;
+  }
 `;
 
 const Price = styled.p`
   font-size: 16px;
   color: #666666;
   margin-bottom: 10px;
-`;
 
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
 const Button = styled.button`
   background-color: #4caf50;
   color: #ffffff;
@@ -79,24 +105,13 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
-  box-shadow: 0 4px 6px#00000020;
-  margin-right: 10px;
+  box-shadow: 0 4px 6px #00000020;
+  margin-top: 10px;
   transition: background-color 0.3s ease-in-out;
 
-  &:hover {
-    background-color: #3e8e41;
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    background-color: #2e7d32;
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    background-color: #bdbdbd;
-    cursor: not-allowed;
-    box-shadow: none;
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 12px;
   }
 `;
 
@@ -108,23 +123,8 @@ const ProductNameContainer = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  &:hover::after {
-    content: attr(data-title);
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    background-color: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 4px;
-    white-space: nowrap;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  &:hover::after {
-    opacity: 1;
+  @media (max-width: 768px) {
+    max-width: 150px;
   }
 `;
 
@@ -138,10 +138,11 @@ const FilterButton = styled.button`
   box-shadow: 0 0 10px #00000060;
   transition: background-color 0.2s ease-in-out;
   margin: 20px 20px;
-  &:hover {
-    background-color: #3e8e41;
-    color: #ffffff;
-    transform: translateY(0);
+
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 14px;
+    margin: 10px 10px;
   }
 `;
 
@@ -156,9 +157,10 @@ const ToggleButton = styled.button`
   margin: 10px 10px 10px 5px;
   box-shadow: 0 0 10px #00000040;
   transition: background-color 0.3s ease-in-out;
-  &:hover {
-    background-color: #3e8e41;
-    transform: translateY(0);
+
+  @media (max-width: 768px) {
+    padding: 8px;
+    font-size: 14px;
   }
 `;
 
@@ -171,11 +173,17 @@ const ProductGridItem = styled.div`
   width: 27%;
   margin: 10px;
   border-radius: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0;
+  }
 `;
 
 const ProductListItem = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
   border: 1px solid #ddd;
@@ -184,17 +192,23 @@ const ProductListItem = styled.div`
   border-radius: 10px;
   box-shadow: 0 0 10px #00000010;
 
-  img {
-    width: 100px;
-    height: 120px;
-    object-fit: contain;
-    margin-right: 20px;
-  }
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin-bottom: 10px;
 
-  div {
-    flex: 1;
+    img {
+      width: 80px;
+      height: 100px;
+      margin-bottom: 15px;
+    }
+
+    div {
+      flex: 1;
+      margin-bottom: 10px;
+    }
   }
 `;
+
 const WishlistButton = styled.div<{ viewMode: string; isInWishlist: boolean }>`
   background-color: ${(props) => (props.isInWishlist ? '#e64a19' : '#ff5722')};
   background-color: #ff5722;
@@ -205,7 +219,7 @@ const WishlistButton = styled.div<{ viewMode: string; isInWishlist: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 10px 0 0 0;
   font-size: 16px;
   font-weight: bold;
   width: ${(props) => (props.viewMode === 'list' ? '90px' : '50px')};
@@ -214,32 +228,27 @@ const WishlistButton = styled.div<{ viewMode: string; isInWishlist: boolean }>`
     background-color 0.3s ease,
     transform 0.3s ease;
 
-  &:hover {
-    background-color: #e64a19;
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    background-color: #d84315;
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    background-color: #bdbdbd;
-    cursor: not-allowed;
-    box-shadow: none;
+  @media (max-width: 768px) {
+    padding: 6px;
+    font-size: 14px;
+    margin-left: 2px;
   }
 `;
-
 const ProductList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.products.products);
   const status = useSelector((state: RootState) => state.products.status);
   const error = useSelector((state: RootState) => state.products.error);
   const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
-  const reviews = useSelector((state: RootState) => state.reviews.reviews);
+  const averageRatings = useSelector(
+    (state: RootState) => state.reviews.averageRatings
+  );
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
+  type PriceFilter = 'all' | 'low' | 'medium' | 'high';
+  
   const [priceFilter, setPriceFilter] = useState<PriceFilter>('all');
+  type RatingFilter = 'all' | '1-star' | '2-star' | '3-star' | '4-star' | '5-star';
+  
   const [ratingFilter, setRatingFilter] = useState<RatingFilter>('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [viewMode, setViewMode] = useState('grid');
@@ -250,19 +259,23 @@ const ProductList: React.FC = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const category = query.get('category') ?? 'all';
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchProducts());
+    } else if (status === 'succeeded') {
+      products.forEach((product: IProduct) => {
+        dispatch(fetchReviews(product.id));
+      });
+    }
+  }, [dispatch, status, products]);
+
   useEffect(() => {
     if (category) {
       setCategoryFilter(category);
     }
   }, [category]);
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchProducts());
-    }
-    products.forEach((product: IProduct) => {
-      dispatch(fetchReviews(product.id));
-    });
-  }, [dispatch, status, products]);
+
   useEffect(() => {
     const status = wishlist.reduce(
       (acc, item) => {
@@ -277,13 +290,21 @@ const ProductList: React.FC = () => {
   const handlePriceFilterChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setPriceFilter(event.target.value as PriceFilter);
+    setPriceFilter(event.target.value as 'all' | 'low' | 'medium' | 'high');
   };
 
   const handleRatingFilterChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setRatingFilter(event.target.value as RatingFilter);
+    setRatingFilter(
+      event.target.value as
+        | 'all'
+        | '1-star'
+        | '2-star'
+        | '3-star'
+        | '4-star'
+        | '5-star'
+    );
   };
 
   const handleCategoryFilterChange = (
@@ -292,27 +313,10 @@ const ProductList: React.FC = () => {
     setCategoryFilter(event.target.value);
   };
 
-  const getAverageRating = (productId: string) => {
-    const productReviews = reviews.filter(
-      (review) => review.productId === productId
-    );
-    const totalRating = productReviews.reduce(
-      (total, review) => total + review.rating,
-      0
-    );
-    return productReviews.length ? totalRating / productReviews.length : 0;
-  };
-
-  type PriceFilter = 'all' | 'low' | 'medium' | 'high';
-  type RatingFilter =
-    | 'all'
-    | '1-star'
-    | '2-star'
-    | '3-star'
-    | '4-star'
-    | '5-star';
-
-  const isPriceMatch = (price: number, filter: PriceFilter): boolean => {
+  const isPriceMatch = (
+    price: number,
+    filter: 'all' | 'low' | 'medium' | 'high'
+  ): boolean => {
     switch (filter) {
       case 'low':
         return price < 50;
@@ -326,7 +330,10 @@ const ProductList: React.FC = () => {
     }
   };
 
-  const isRatingMatch = (rating: number, filter: RatingFilter): boolean => {
+  const isRatingMatch = (
+    rating: number,
+    filter: 'all' | '1-star' | '2-star' | '3-star' | '4-star' | '5-star'
+  ): boolean => {
     switch (filter) {
       case '1-star':
         return rating >= 1 && rating < 2;
@@ -345,14 +352,15 @@ const ProductList: React.FC = () => {
   };
 
   const isCategoryMatch = (category: string, filter: string): boolean => {
-    return filter === 'all' || category === filter || category === filter;
+    return filter === 'all' || category === filter;
   };
 
   const isSearchMatch = (title: string, searchTerm: string): boolean => {
     return title.toLowerCase().includes(searchTerm.toLowerCase());
   };
+
   const filteredProducts: IProduct[] = products.filter((product: IProduct) => {
-    const averageRating = getAverageRating(product.id);
+    const averageRating = averageRatings[product.id] || 0;
 
     return (
       isPriceMatch(product.price, priceFilter) &&
@@ -402,7 +410,6 @@ const ProductList: React.FC = () => {
 
   const handleToDelete = (id: string) => {
     dispatch(deleteProduct(id));
-    dispatch(removeProductFromHistory(id));
     toast.error('Item deleted');
   };
 
@@ -441,9 +448,9 @@ const ProductList: React.FC = () => {
         >
           <option value="all">All Categories</option>
           <option value="electronics">Electronics</option>
-          <option value="jewelery">Jewelery</option>
-          <option value="men's clothing">Men clothing</option>
-          <option value="women's clothing">Women clothing</option>
+          <option value="jewelery">Jewelry</option>
+          <option value="men's clothing">Men's Clothing</option>
+          <option value="women's clothing">Women's Clothing</option>
         </FilterDropdown>
 
         <FilterButton onClick={handleResetFilter}>Reset Filters</FilterButton>
@@ -452,7 +459,9 @@ const ProductList: React.FC = () => {
         >
           {viewMode === 'grid' ? 'List' : 'Grid'} View
         </ToggleButton>
+        <MyPieChart />
       </FilterBox>
+
       {filteredProducts.length === 0 ? (
         <NoProductFound />
       ) : (
@@ -469,11 +478,8 @@ const ProductList: React.FC = () => {
                   </ProductNameContainer>
                 </Link>
                 <Price>{product.price}$</Price>
-                <StarRating
-                  rating={getAverageRating(product.id)}
-                  onRatingChange={undefined}
-                  interactive={false}
-                />
+                <TestStar reviews={averageRatings[product.id] || 0} />{' '}
+                {/* Display average rating */}
                 <div style={{ display: 'flex' }}>
                   <Button onClick={() => handleAddToCart(product)}>
                     Add to Cart
@@ -505,11 +511,8 @@ const ProductList: React.FC = () => {
                   {product.title}
                 </ProductNameContainer>
                 <Price>{product.price}$</Price>
-                <StarRating
-                  rating={getAverageRating(product.id)}
-                  onRatingChange={undefined}
-                  interactive={false}
-                />
+                <TestStar reviews={averageRatings[product.id] || 0} />{' '}
+                {/* Display average rating */}
                 <Button onClick={() => handleAddToCart(product)}>
                   Add to Cart
                 </Button>
@@ -518,17 +521,6 @@ const ProductList: React.FC = () => {
                     Delete
                   </Button>
                 )}
-                {/* <WishlistButton
-                  isInWishlist={wishlistStatus[product.id] || false}
-                  viewMode={viewMode}
-                  onClick={() => handleAddToWishlist(product)}
-                >
-                  {wishlistStatus[product.id] ? (
-                    <AiFillHeart />
-                  ) : (
-                    <AiOutlineHeart />
-                  )}
-                </WishlistButton> */}
                 <WishlistButton
                   isInWishlist={wishlistStatus[product.id] || false}
                   viewMode={viewMode}

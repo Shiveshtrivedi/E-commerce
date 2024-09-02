@@ -1,17 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   saveCartToCookies,
-  getCartFromCookies,
   saveOrdersToCookies,
   getOrdersFromCookies,
 } from '../../utils/CookieUtils';
 import { ICartItem, ICartState, IOrder } from '../../utils/interface/Interface';
 
+const loadCartFromStorage = () => {
+  const localStorageCart = localStorage.getItem('cart');
+  if (localStorageCart) {
+    return JSON.parse(localStorageCart);
+  }
+  return [];
+};
+
 const initialState: ICartState = {
-  items: [],
-  totalAmount: 0,
+  items: loadCartFromStorage(),
+  totalAmount: parseFloat(localStorage.getItem('totalAmount') || '0'),
   totalItems: 0,
   userId: null,
+};
+
+const calculateTotals = (items: ICartItem[]) => {
+  const totalAmount = items.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
+  return { totalAmount, totalItems };
 };
 
 const cartSlice = createSlice({
@@ -20,7 +36,21 @@ const cartSlice = createSlice({
   reducers: {
     setUserId(state, action: PayloadAction<string>) {
       state.userId = action.payload;
-      state.items = getCartFromCookies(action.payload) || [];
+      const localStorageCart = localStorage.getItem('cart');
+      if (localStorageCart) {
+        state.items = JSON.parse(localStorageCart);
+      }
+      // else {
+      //   // Fallback to cookies if localStorage is empty
+      //   state.items = getCartFromCookies(action.payload) || [];
+      // }
+
+      // state.items = getCartFromCookies(action.payload) || [];
+      console.log(
+        'before state of total amoutn ',
+        state.items,
+        state.totalAmount
+      );
       state.totalAmount = state.items.reduce(
         (total, item) => total + item.price * item.quantity,
         0
@@ -28,6 +58,11 @@ const cartSlice = createSlice({
       state.totalItems = state.items.reduce(
         (total, item) => total + item.quantity,
         0
+      );
+      console.log(
+        'after state of total amoutn ',
+        state.items,
+        state.totalAmount
       );
     },
 
@@ -53,7 +88,7 @@ const cartSlice = createSlice({
         0
       );
 
-      saveCartToCookies(state.userId, state.items);
+      // saveCartToCookies(state.userId, state.items);
       localStorage.setItem('cart', JSON.stringify(state.items));
     },
 
@@ -82,7 +117,7 @@ const cartSlice = createSlice({
           0
         );
 
-        saveCartToCookies(state.userId, state.items);
+        // saveCartToCookies(state.userId, state.items);
         localStorage.setItem('cart', JSON.stringify(state.items));
       }
     },
@@ -94,7 +129,7 @@ const cartSlice = createSlice({
       state.totalAmount = 0;
       state.totalItems = 0;
 
-      saveCartToCookies(state.userId, state.items);
+      // saveCartToCookies(state.userId, state.items);
       localStorage.setItem('cart', JSON.stringify(state.items));
     },
     checkout(state) {

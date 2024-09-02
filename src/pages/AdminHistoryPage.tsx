@@ -41,7 +41,7 @@ const ProductItem = styled.li`
   margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px #00000020;
 `;
 
 const ProductImage = styled.img`

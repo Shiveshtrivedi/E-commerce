@@ -4,7 +4,7 @@ import { IStarRatingProps } from '../utils/interface/Interface';
 
 const StarContainer = styled.div`
   display: flex;
-  direction: row;
+  flex-direction: row;
 `;
 
 const Star = styled.span<{ filled: boolean; interactive: boolean }>`

@@ -30,7 +30,7 @@ const LoginWrapper = styled.div`
 const LoginFormContainer = styled.div`
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px #00000050;
   padding: 20px;
   width: 100%;
   max-width: 400px;

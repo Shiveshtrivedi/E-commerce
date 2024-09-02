@@ -24,7 +24,7 @@ const WishlistContainer = styled.div`
   @media (max-width: 480px) {
     padding: 10px;
     max-width: 95%;
-    height: auto; /* Adjust height for mobile */
+    height: auto;
   }
 `;
 

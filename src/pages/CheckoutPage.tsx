@@ -112,7 +112,7 @@ const CheckoutPage: React.FC = () => {
 
     dispatch(clearCart());
 
-    navigate('/checkout/success');
+    navigate('/checkout/payment');
   };
 
   return (

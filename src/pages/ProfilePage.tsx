@@ -17,7 +17,7 @@ const Container = styled.div`
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px #00000020;
 `;
 
 const Heading = styled.h1`
@@ -53,7 +53,7 @@ const Button = styled.button`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5);
+    box-shadow: 0 0 0 2px #43ff64d9;
   }
 `;
 

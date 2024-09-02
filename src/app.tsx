@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles/global.css';
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/privateRoute';
@@ -22,8 +22,18 @@ import PrivacyPolicy from './components/privacyPolicy';
 import TermsOfService from './components/termsOfService';
 import Help from './components/helpPage';
 import SuccessTickAnimation from './components/successTickAnimation';
+import { useDispatch } from 'react-redux';
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    const storeUserId = localStorage.getItem('userId');
+    if(storeUserId){
+      dispatch({type:'auth/setUserId',payload:storeUserId})
+    }
+
+  },[dispatch])
   return (
     <div id="root">
       <Header />
@@ -83,6 +93,10 @@ function App() {
           <Route
             path="/checkout/success"
             element={<PrivateRoute element={<SuccessTickAnimation />} />}
+          />
+          <Route
+            path="/checkout/payment"
+            element={<PrivateRoute element={<PaymentPage />} />}
           />
           <Route path="/checkout/success" element="order success" />
           <Route path="/privacy" element={<PrivacyPolicy />} />

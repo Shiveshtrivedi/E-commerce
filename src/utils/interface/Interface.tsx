@@ -98,7 +98,7 @@ export interface IStarRatingProps {
 export interface IOrder {
   id: string;
   userId: string;
-  items: Array<{ id: number; name: string; price: number; quantity: number }>; // Use number here
+  items: Array<{ id: number; name: string; price: number; quantity: number }>;
   totalAmount: number;
   address: {
     name: string;
