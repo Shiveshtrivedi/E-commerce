@@ -27,13 +27,12 @@ import PaymentPage from './pages/PaymentPage';
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     const storeUserId = localStorage.getItem('userId');
-    if(storeUserId){
-      dispatch({type:'auth/setUserId',payload:storeUserId})
+    if (storeUserId) {
+      dispatch({ type: 'auth/setUserId', payload: storeUserId });
     }
-
-  },[dispatch])
+  }, [dispatch]);
   return (
     <div id="root">
       <Header />

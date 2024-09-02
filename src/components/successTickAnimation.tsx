@@ -42,7 +42,7 @@ const Checkmark = styled.svg`
     fill: none;
     opacity: 0;
     animation: ${appear} 0.5s ease forwards;
-    animation-delay: 0.4s; 
+    animation-delay: 0.4s;
   }
 `;
 

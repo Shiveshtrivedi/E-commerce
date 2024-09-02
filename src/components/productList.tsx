@@ -245,10 +245,16 @@ const ProductList: React.FC = () => {
   );
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   type PriceFilter = 'all' | 'low' | 'medium' | 'high';
-  
+
   const [priceFilter, setPriceFilter] = useState<PriceFilter>('all');
-  type RatingFilter = 'all' | '1-star' | '2-star' | '3-star' | '4-star' | '5-star';
-  
+  type RatingFilter =
+    | 'all'
+    | '1-star'
+    | '2-star'
+    | '3-star'
+    | '4-star'
+    | '5-star';
+
   const [ratingFilter, setRatingFilter] = useState<RatingFilter>('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [viewMode, setViewMode] = useState('grid');

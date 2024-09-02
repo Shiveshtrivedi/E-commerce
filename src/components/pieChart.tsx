@@ -38,7 +38,10 @@ const MyPieChart: React.FC = () => {
         dataKey="value"
       >
         {data.map((entry, index) => (
-          <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
+          <Cell
+            key={`cell-${entry.name}`}
+            fill={COLORS[index % COLORS.length]}
+          />
         ))}
       </Pie>
       <Tooltip />

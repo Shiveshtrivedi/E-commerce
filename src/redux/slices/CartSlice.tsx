@@ -16,7 +16,7 @@ const loadCartFromStorage = () => {
 
 const initialState: ICartState = {
   items: loadCartFromStorage(),
-  totalAmount: parseFloat(localStorage.getItem('totalAmount') || '0'),
+  totalAmount: parseFloat(localStorage.getItem('totalAmount') ?? '0'),
   totalItems: 0,
   userId: null,
 };
@@ -40,12 +40,7 @@ const cartSlice = createSlice({
       if (localStorageCart) {
         state.items = JSON.parse(localStorageCart);
       }
-      // else {
-      //   // Fallback to cookies if localStorage is empty
-      //   state.items = getCartFromCookies(action.payload) || [];
-      // }
 
-      // state.items = getCartFromCookies(action.payload) || [];
       console.log(
         'before state of total amoutn ',
         state.items,
@@ -88,7 +83,6 @@ const cartSlice = createSlice({
         0
       );
 
-      // saveCartToCookies(state.userId, state.items);
       localStorage.setItem('cart', JSON.stringify(state.items));
     },
 
@@ -117,7 +111,6 @@ const cartSlice = createSlice({
           0
         );
 
-        // saveCartToCookies(state.userId, state.items);
         localStorage.setItem('cart', JSON.stringify(state.items));
       }
     },
@@ -129,7 +122,6 @@ const cartSlice = createSlice({
       state.totalAmount = 0;
       state.totalItems = 0;
 
-      // saveCartToCookies(state.userId, state.items);
       localStorage.setItem('cart', JSON.stringify(state.items));
     },
     checkout(state) {

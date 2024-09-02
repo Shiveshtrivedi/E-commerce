@@ -23,7 +23,7 @@ const PaymentPage: React.FC = () => {
                 },
               },
             ],
-            intent: 'CAPTURE'
+            intent: 'CAPTURE',
           });
         }}
         onApprove={async (data, actions) => {
@@ -35,9 +35,13 @@ const PaymentPage: React.FC = () => {
           try {
             const details = await actions.order.capture();
             if (details.payer && details.payer.name) {
-              alert('Transaction completed by ' + details.payer.name.given_name);
+              alert(
+                'Transaction completed by ' + details.payer.name.given_name
+              );
             } else {
-              alert('Transaction completed, but payer details are not available.');
+              alert(
+                'Transaction completed, but payer details are not available.'
+              );
             }
           } catch (error) {
             console.error('Error capturing order:', error);
