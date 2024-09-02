@@ -6,12 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IReview } from '../../utils/interface/Interface';
-
-interface IReviewsState {
-  reviews: IReview[];
-  averageRatings: Record<string, number>;
-  error: string | null;
-}
+import { IReviewsState } from '../../utils/interface/Interface';
 
 const initialState: IReviewsState = {
   reviews: [],

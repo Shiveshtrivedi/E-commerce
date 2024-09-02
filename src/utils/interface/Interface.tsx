@@ -114,3 +114,35 @@ export interface IOrderState {
   orders: IOrder[];
   userId: string | null;
 }
+
+export interface IReviewFormProps {
+  productId: string;
+  userId: string;
+}
+
+export interface ISearchState {
+  searchTerm: string;
+  searchResults: IProduct[];
+}
+
+export interface IReviewsState {
+  reviews: IReview[];
+  averageRatings: Record<string, number>;
+  error: string | null;
+}
+
+export interface ICookieOptions {
+  expires?: number | Date;
+  path?: string;
+  domain?: string;
+  secure?: boolean;
+  sameSite?: 'Strict' | 'Lax' | 'None';
+}
+
+export interface IAddressDetails {
+  name: string;
+  pincode: string;
+  phoneNumber: string;
+  city: string;
+  state: string;
+}

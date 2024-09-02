@@ -1,26 +1,13 @@
 import Cookies from 'js-cookie';
 import { IOrder } from './interface/Interface';
+import {ICookieOptions,IAddressDetails} from './interface/Interface';
 
-interface CookieOptions {
-  expires?: number | Date;
-  path?: string;
-  domain?: string;
-  secure?: boolean;
-  sameSite?: 'Strict' | 'Lax' | 'None';
-}
 
-interface AddressDetails {
-  name: string;
-  pincode: string;
-  phoneNumber: string;
-  city: string;
-  state: string;
-}
 
 export const setCookie = (
   name: string,
   value: string,
-  options: CookieOptions = {}
+  options: ICookieOptions = {}
 ): void => {
   Cookies.set(name, value, { ...options, expires: 1, sameSite: 'Strict' });
 };
@@ -88,7 +75,7 @@ export const removeAdminHistoryFromCookies = (userId: string) => {
 
 export const saveAddressToCookies = (
   userId: string,
-  addressDetails: AddressDetails
+  addressDetails: IAddressDetails
 ) => {
   Cookies.set(`userAddress_${userId}`, JSON.stringify(addressDetails), {
     expires: 7,
@@ -97,7 +84,7 @@ export const saveAddressToCookies = (
 
 export const getAddressFromCookies = (
   userId: string
-): AddressDetails | null => {
+): IAddressDetails | null => {
   const address = Cookies.get(`userAddress_${userId}`);
 
   return address ? JSON.parse(address) : null;

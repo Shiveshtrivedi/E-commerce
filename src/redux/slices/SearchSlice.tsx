@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../Store';
 import { IProduct } from '../../utils/interface/Interface';
+import { ISearchState } from '../../utils/interface/Interface';
 
-interface SearchState {
-  searchTerm: string;
-  searchResults: IProduct[];
-}
-
-const initialState: SearchState = {
+const initialState: ISearchState = {
   searchTerm: '',
   searchResults: [],
 };

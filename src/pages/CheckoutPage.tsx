@@ -77,7 +77,7 @@ const CheckoutPage: React.FC = () => {
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log('cart item in chekcout ', cartItems);
+    console.log("enve key", process.env.REACT_APP_RAZORPAY_CLIENT_ID)
     e.preventDefault();
 
     if (!userId) {
@@ -107,7 +107,6 @@ const CheckoutPage: React.FC = () => {
       createdAt: new Date().toISOString(),
     };
 
-    console.log('New Order Created:', newOrder);
     dispatch(addOrder(newOrder));
 
     dispatch(clearCart());

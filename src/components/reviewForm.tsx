@@ -4,6 +4,7 @@ import { postReview } from '../redux/slices/UserReviewSlice';
 import { AppDispatch } from '../redux/Store';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
+import { IReviewFormProps } from '../utils/interface/Interface';
 
 const FormContainer = styled.div`
   max-width: 600px;
@@ -74,12 +75,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-interface ReviewFormProps {
-  productId: string;
-  userId: string;
-}
-
-const ReviewForm: React.FC<ReviewFormProps> = ({
+const ReviewForm: React.FC<IReviewFormProps> = ({
   productId,
   userId,
 }: {

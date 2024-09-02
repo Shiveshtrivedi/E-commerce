@@ -20,6 +20,10 @@ const MyPieChart: React.FC = () => {
     },
     {} as Record<string, number>
   );
+  const data = Object.keys(categoryCounts).map((category) => ({
+    name: category,
+    value: categoryCounts[category],
+  }));
 
   return (
     <PieChart width={400} height={400}>
