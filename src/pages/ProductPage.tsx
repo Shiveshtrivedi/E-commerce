@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from '../redux/Store';
 import { fetchProducts } from '../redux/slices/ProductSlice';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-import TestStar from '../components/star';
+import Star from '../components/star';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -141,7 +141,7 @@ const ProductPage: React.FC = () => {
         <Image src={product.image} alt={product.title} />
       </Zoom>
       <Title>{product.title}</Title>
-      {product.rating && <TestStar reviews={product.rating.rate} />}
+      {product.rating && <Star reviews={product.rating.rate} />}
       <Price>{product.price}$</Price>
       <Description>{product.description}</Description>
       <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>

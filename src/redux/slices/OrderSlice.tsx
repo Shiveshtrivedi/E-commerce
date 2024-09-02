@@ -19,8 +19,7 @@ const orderSlice = createSlice({
       state.orders = orders1 || [];
     },
     addOrder(state, action: PayloadAction<IOrder>) {
-      state.orders.push(action.payload);
-
+      state.orders = [...state.orders, action.payload];
       const userId = action.payload.userId;
       saveOrdersToCookies(userId, state.orders);
     },

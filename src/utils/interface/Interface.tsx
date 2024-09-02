@@ -37,7 +37,7 @@ export interface ICartState {
   items: ICartItem[];
   totalAmount: number;
   userId: string | null;
-  totalItems?: number;
+  totalItems: number;
 }
 
 export interface IProduct {

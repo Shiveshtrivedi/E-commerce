@@ -14,7 +14,7 @@ const WishlistContainer = styled.div`
   max-width: 600px;
   height: 383px;
   margin: 0 auto;
-  overflow-y: auto; /* Allows scrolling if content overflows */
+  overflow-y: auto; 
 
   @media (max-width: 768px) {
     padding: 15px;

@@ -1,8 +1,5 @@
 import Cookies from 'js-cookie';
-import { IOrder } from './interface/Interface';
-import {ICookieOptions,IAddressDetails} from './interface/Interface';
-
-
+import { IOrder, ICookieOptions, IAddressDetails } from './interface/Interface';
 
 export const setCookie = (
   name: string,

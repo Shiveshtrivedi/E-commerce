@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/Store';
 import { initializeOrders } from '../redux/slices/OrderSlice';
 import styled from 'styled-components';
-import { getOrdersFromCookies } from '../utils/CookieUtils';
 
 const HistoryContainer = styled.div`
   padding: 20px;
@@ -69,9 +68,6 @@ const OrderHistoryPage: React.FC = () => {
   }, [userId, dispatch]);
 
   const userOrders = orders.filter((order) => order.userId === userId);
-  console.log('User Orders:', userOrders);
-  const checkcookierorder = userId ? getOrdersFromCookies(userId) : null;
-  console.log('checkcookierorder', checkcookierorder);
 
   return (
     <HistoryContainer>

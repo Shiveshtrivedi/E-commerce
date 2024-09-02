@@ -23,7 +23,9 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Message = styled.div`
+const Message = styled.div.attrs({
+  'aria-live': 'polite',
+})`
   position: absolute;
   left: 50%;
   top: 50%;
@@ -32,7 +34,6 @@ const Message = styled.div`
   color: #6c757d;
   animation: ${fadeInOut} 3s infinite;
 `;
-
 const NoProductFound = () => (
   <Container>
     <Message>No Product Found</Message>

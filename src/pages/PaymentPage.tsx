@@ -109,7 +109,7 @@ const PaymentPage: React.FC = () => {
 
     const options: any = {
       key: 'rzp_test_8aCsFUFy8E4VoU',
-      amount: latestOrder.totalAmount * 100, 
+      amount: latestOrder.totalAmount * 100,
       currency: 'INR',
       name: 'ITT',
       description: 'Test Transaction',

@@ -7,12 +7,12 @@ const StarContainer = styled.div`
   display: flex;
 `;
 
-const Star = styled.span<{ filled: boolean }>`
+const StarIcon = styled.span<{ filled: boolean }>`
   color: ${({ filled }) => (filled ? '#f39c12' : '#dcdcdc')};
   font-size: 24px;
 `;
 
-const TestStar = ({ reviews }: { reviews: number }) => {
+const Star = ({ reviews }: { reviews: number }) => {
   const ratingStar = Array.from({ length: 5 }, (_, index) => {
     const number = index + 0.5;
     const stars = reviews;
@@ -29,13 +29,13 @@ const TestStar = ({ reviews }: { reviews: number }) => {
     }
 
     return (
-      <Star key={index} filled={filled || halfFilled}>
+      <StarIcon key={index} filled={filled || halfFilled}>
         {starIcon}
-      </Star>
+      </StarIcon>
     );
   });
 
   return <StarContainer>{ratingStar}</StarContainer>;
 };
 
-export default TestStar;
+export default Star;

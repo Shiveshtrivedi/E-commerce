@@ -32,7 +32,7 @@ const CheckoutForm = styled.form`
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px #00000020;
 `;
 
 const FormLabel = styled.label`
@@ -77,7 +77,6 @@ const CheckoutPage: React.FC = () => {
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("enve key", process.env.REACT_APP_RAZORPAY_CLIENT_ID)
     e.preventDefault();
 
     if (!userId) {

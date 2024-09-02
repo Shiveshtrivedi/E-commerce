@@ -236,7 +236,6 @@ const Cart: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
-  console.log('cartItems in totalAmount ', totalAmount);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 

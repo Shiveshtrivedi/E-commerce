@@ -16,8 +16,8 @@ import { fetchReviews } from '../redux/slices/UserReviewSlice';
 import { IProduct, IWishListItem } from '../utils/interface/Interface';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import NoProductFound from './noProductFound';
-import TestStar from './star';
 import MyPieChart from './pieChart';
+import Star from './star';
 
 const Container = styled.div`
   display: flex;
@@ -234,6 +234,7 @@ const WishlistButton = styled.div<{ viewMode: string; isInWishlist: boolean }>`
     margin-left: 2px;
   }
 `;
+
 const ProductList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.products.products);
@@ -484,20 +485,17 @@ const ProductList: React.FC = () => {
                   </ProductNameContainer>
                 </Link>
                 <Price>{product.price}$</Price>
-                <TestStar reviews={averageRatings[product.id] || 0} />{' '}
-                {/* Display average rating */}
-                <div style={{ display: 'flex' }}>
-                  <Button onClick={() => handleAddToCart(product)}>
-                    Add to Cart
-                  </Button>
-                  {isAdmin && (
-                    <Button onClick={() => handleToDelete(product.id)}>
-                      Delete
-                    </Button>
-                  )}
+                <Star reviews={averageRatings[product.id] || 0} />{' '}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}
+                >
                   <WishlistButton
-                    isInWishlist={wishlistStatus[product.id] || false}
                     viewMode={viewMode}
+                    isInWishlist={wishlistStatus[product.id] || false}
                     onClick={() => handleAddToWishlist(product)}
                   >
                     {wishlistStatus[product.id] ? (
@@ -506,38 +504,55 @@ const ProductList: React.FC = () => {
                       <AiOutlineHeart />
                     )}
                   </WishlistButton>
+                  <Button onClick={() => handleAddToCart(product)}>
+                    Add to Cart
+                  </Button>
                 </div>
+                {isAdmin && (
+                  <Button onClick={() => handleToDelete(product.id)}>
+                    Delete
+                  </Button>
+                )}
               </ProductGridItem>
             ) : (
               <ProductListItem key={product.id}>
                 <Link to={`/products/${product.id}`} title={product.title}>
                   <Image src={product.image} alt={product.title} />
                 </Link>
-                <ProductNameContainer data-title={product.title}>
-                  {product.title}
-                </ProductNameContainer>
+                <Link to={`/products/${product.id}`} title={product.title}>
+                  <ProductNameContainer data-title={product.title}>
+                    {product.title}
+                  </ProductNameContainer>
+                </Link>
                 <Price>{product.price}$</Price>
-                <TestStar reviews={averageRatings[product.id] || 0} />{' '}
-                {/* Display average rating */}
-                <Button onClick={() => handleAddToCart(product)}>
-                  Add to Cart
-                </Button>
+                <Star reviews={averageRatings[product.id] || 0} />{' '}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}
+                >
+                  <WishlistButton
+                    viewMode={viewMode}
+                    isInWishlist={wishlistStatus[product.id] || false}
+                    onClick={() => handleAddToWishlist(product)}
+                  >
+                    {wishlistStatus[product.id] ? (
+                      <AiFillHeart />
+                    ) : (
+                      <AiOutlineHeart />
+                    )}
+                  </WishlistButton>
+                  <Button onClick={() => handleAddToCart(product)}>
+                    Add to Cart
+                  </Button>
+                </div>
                 {isAdmin && (
                   <Button onClick={() => handleToDelete(product.id)}>
                     Delete
                   </Button>
                 )}
-                <WishlistButton
-                  isInWishlist={wishlistStatus[product.id] || false}
-                  viewMode={viewMode}
-                  onClick={() => handleAddToWishlist(product)}
-                >
-                  {wishlistStatus[product.id] ? (
-                    <AiFillHeart />
-                  ) : (
-                    <AiOutlineHeart />
-                  )}
-                </WishlistButton>
               </ProductListItem>
             )
           )}

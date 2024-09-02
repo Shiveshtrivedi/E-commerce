@@ -3,13 +3,6 @@ import { useSelector } from 'react-redux';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import { RootState } from '../redux/Store';
 
-const data = [
-  { name: 'Category 1', value: 400 },
-  { name: 'Category 2', value: 300 },
-  { name: 'Category 3', value: 300 },
-  { name: 'Category 4', value: 200 },
-];
-
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const MyPieChart: React.FC = () => {
   const products = useSelector((state: RootState) => state.products.products);
