@@ -21,19 +21,15 @@ const MyPieChart: React.FC = () => {
     {} as Record<string, number>
   );
 
-  const data = Object.keys(categoryCounts).map((category) => ({
-    name: category,
-    value: categoryCounts[category],
-  }));
   return (
     <PieChart width={400} height={400}>
       <Pie
         data={data}
-        cx="20%"
+        cx="30 %"
         cy="30%"
         labelLine={false}
         label={({ name, value }) => `${name}: ${value}`}
-        outerRadius={50}
+        outerRadius={30}
         fill="#8884d8"
         dataKey="value"
       >

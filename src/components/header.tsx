@@ -80,12 +80,6 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const CartContainer = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-`;
-
 const CartIcon = styled(BsCart)`
   font-size: 33px;
   color: #333333;

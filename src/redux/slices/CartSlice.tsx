@@ -21,15 +21,6 @@ const initialState: ICartState = {
   userId: null,
 };
 
-const calculateTotals = (items: ICartItem[]) => {
-  const totalAmount = items.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
-  return { totalAmount, totalItems };
-};
-
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -41,11 +32,6 @@ const cartSlice = createSlice({
         state.items = JSON.parse(localStorageCart);
       }
 
-      console.log(
-        'before state of total amoutn ',
-        state.items,
-        state.totalAmount
-      );
       state.totalAmount = state.items.reduce(
         (total, item) => total + item.price * item.quantity,
         0
@@ -53,11 +39,6 @@ const cartSlice = createSlice({
       state.totalItems = state.items.reduce(
         (total, item) => total + item.quantity,
         0
-      );
-      console.log(
-        'after state of total amoutn ',
-        state.items,
-        state.totalAmount
       );
     },
 
