@@ -80,7 +80,7 @@ const CheckoutPage: React.FC = () => {
     e.preventDefault();
 
     if (!userId) {
-      alert('User is not logged in.');
+      navigate('/login');
       return;
     }
 

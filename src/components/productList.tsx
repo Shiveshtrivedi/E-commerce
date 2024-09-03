@@ -331,7 +331,6 @@ const ProductList: React.FC = () => {
         return price >= 50 && price < 100;
       case 'high':
         return price >= 100;
-      case 'all':
       default:
         return true;
     }
@@ -352,7 +351,6 @@ const ProductList: React.FC = () => {
         return rating >= 4 && rating < 5;
       case '5-star':
         return rating === 5;
-      case 'all':
       default:
         return true;
     }
@@ -524,7 +522,7 @@ const ProductList: React.FC = () => {
                     {product.title}
                   </ProductNameContainer>
                 </Link>
-                <Price>{product.price}$</Price>
+                <Price>${product.price}</Price>
                 <Star reviews={averageRatings[product.id] || 0} />{' '}
                 <div
                   style={{
