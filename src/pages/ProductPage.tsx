@@ -70,7 +70,6 @@ const ProductPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const handleAddToCart = useAddToCart();
- 
 
   const [product, setProduct] = useState<IProduct | null>(null);
   const dispatch = useDispatch<AppDispatch>();

@@ -6,9 +6,8 @@ import {
   fetchProducts,
   resetFilter,
 } from '../redux/slices/ProductSlice';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Loading from './loading';
 import { addToWishList, removeToWishList } from '../redux/slices/WishlistSlice';
 import { toast } from 'react-toastify';
 import { fetchReviews } from '../redux/slices/UserReviewSlice';
@@ -19,6 +18,7 @@ import MyPieChart from './pieChart';
 import Star from './star';
 import { useAddToCart } from '../hooks/useCart';
 import { useProductFilter } from '../hooks/useFilter';
+import Loading from './loading';
 
 const Container = styled.div`
   display: flex;
@@ -280,6 +280,10 @@ const ProductList: React.FC = () => {
       });
     }
   }, [dispatch, status, products]);
+
+  if (status === 'loading') {
+    return <Loading />;
+  }
 
   if (status === 'failed') {
     return <div>{error}</div>;
