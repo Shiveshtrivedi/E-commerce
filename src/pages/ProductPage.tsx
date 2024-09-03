@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Loading from '../components/loading';
-import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../redux/slices/CartSlice';
 import ReviewList from '../components/reviewList';
 import ReviewForm from '../components/reviewForm';
 import { fetchReviews } from '../redux/slices/UserReviewSlice';
@@ -13,6 +10,9 @@ import { fetchProducts } from '../redux/slices/ProductSlice';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import Star from '../components/star';
+import { useAddToCart } from '../hooks/useCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { IProduct } from '../utils/interface/Interface';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -69,19 +69,10 @@ const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  interface Product {
-    id: string;
-    title: string;
-    price: number;
-    image: string;
-    description: string;
-    rating?: {
-      rate: number;
-      count: number;
-    };
-  }
+  const handleAddToCart = useAddToCart();
+ 
 
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<IProduct | null>(null);
   const dispatch = useDispatch<AppDispatch>();
 
   const products = useSelector((state: RootState) => state.products.products);
@@ -103,7 +94,7 @@ const ProductPage: React.FC = () => {
   useEffect(() => {
     const foundProduct = products.find((p) => p.id.toString() === id);
     if (foundProduct) {
-      const productWithDescription: Product = {
+      const productWithDescription: IProduct = {
         ...foundProduct,
         description: '',
       };
@@ -121,19 +112,6 @@ const ProductPage: React.FC = () => {
   if (loading) return <Loading />;
   if (error) return <div>{error}</div>;
   if (!product) return <div>Product not found</div>;
-
-  const handleAddToCart = (product: Product) => {
-    dispatch(
-      addToCart({
-        id: parseInt(product.id),
-        name: product.title,
-        price: product.price,
-        image: product.image,
-        quantity: 1,
-      })
-    );
-    toast.success('Product added to cart');
-  };
 
   return (
     <Container>

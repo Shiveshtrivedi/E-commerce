@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/Store';
 import {
@@ -9,7 +9,6 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Loading from './loading';
-import { addToCart } from '../redux/slices/CartSlice';
 import { addToWishList, removeToWishList } from '../redux/slices/WishlistSlice';
 import { toast } from 'react-toastify';
 import { fetchReviews } from '../redux/slices/UserReviewSlice';
@@ -18,6 +17,8 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import NoProductFound from './noProductFound';
 import MyPieChart from './pieChart';
 import Star from './star';
+import { useAddToCart } from '../hooks/useCart';
+import { useProductFilter } from '../hooks/useFilter';
 
 const Container = styled.div`
   display: flex;
@@ -237,17 +238,29 @@ const WishlistButton = styled.div<{ viewMode: string; isInWishlist: boolean }>`
 
 const ProductList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+
   const products = useSelector((state: RootState) => state.products.products);
   const status = useSelector((state: RootState) => state.products.status);
   const error = useSelector((state: RootState) => state.products.error);
   const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
+  const handleAddToCart = useAddToCart();
+  const {
+    filteredProducts,
+    priceFilter,
+    ratingFilter,
+    categoryFilter,
+    viewMode,
+    wishlistStatus,
+    handlePriceFilterChange,
+    handleRatingFilterChange,
+    handleCategoryFilterChange,
+    handleViewModeChange,
+  } = useProductFilter();
   const averageRatings = useSelector(
     (state: RootState) => state.reviews.averageRatings
   );
-  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   type PriceFilter = 'all' | 'low' | 'medium' | 'high';
 
-  const [priceFilter, setPriceFilter] = useState<PriceFilter>('all');
   type RatingFilter =
     | 'all'
     | '1-star'
@@ -256,16 +269,7 @@ const ProductList: React.FC = () => {
     | '4-star'
     | '5-star';
 
-  const [ratingFilter, setRatingFilter] = useState<RatingFilter>('all');
-  const [categoryFilter, setCategoryFilter] = useState('all');
-  const [viewMode, setViewMode] = useState('grid');
-  const [wishlistStatus, setWishlistStatus] = useState<Record<string, boolean>>(
-    {}
-  );
   const wishlist = useSelector((state: RootState) => state.wishList.items);
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const category = query.get('category') ?? 'all';
 
   useEffect(() => {
     if (status === 'idle') {
@@ -277,124 +281,9 @@ const ProductList: React.FC = () => {
     }
   }, [dispatch, status, products]);
 
-  useEffect(() => {
-    if (category) {
-      setCategoryFilter(category);
-    }
-  }, [category]);
-
-  useEffect(() => {
-    const status = wishlist.reduce(
-      (acc, item) => {
-        acc[item.id] = true;
-        return acc;
-      },
-      {} as Record<string, boolean>
-    );
-    setWishlistStatus(status);
-  }, [wishlist]);
-
-  const handlePriceFilterChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setPriceFilter(event.target.value as 'all' | 'low' | 'medium' | 'high');
-  };
-
-  const handleRatingFilterChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setRatingFilter(
-      event.target.value as
-        | 'all'
-        | '1-star'
-        | '2-star'
-        | '3-star'
-        | '4-star'
-        | '5-star'
-    );
-  };
-
-  const handleCategoryFilterChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setCategoryFilter(event.target.value);
-  };
-
-  const isPriceMatch = (
-    price: number,
-    filter: 'all' | 'low' | 'medium' | 'high'
-  ): boolean => {
-    switch (filter) {
-      case 'low':
-        return price < 50;
-      case 'medium':
-        return price >= 50 && price < 100;
-      case 'high':
-        return price >= 100;
-      default:
-        return true;
-    }
-  };
-
-  const isRatingMatch = (
-    rating: number,
-    filter: 'all' | '1-star' | '2-star' | '3-star' | '4-star' | '5-star'
-  ): boolean => {
-    switch (filter) {
-      case '1-star':
-        return rating >= 1 && rating < 2;
-      case '2-star':
-        return rating >= 2 && rating < 3;
-      case '3-star':
-        return rating >= 3 && rating < 4;
-      case '4-star':
-        return rating >= 4 && rating < 5;
-      case '5-star':
-        return rating === 5;
-      default:
-        return true;
-    }
-  };
-
-  const isCategoryMatch = (category: string, filter: string): boolean => {
-    return filter === 'all' || category === filter;
-  };
-
-  const isSearchMatch = (title: string, searchTerm: string): boolean => {
-    return title.toLowerCase().includes(searchTerm.toLowerCase());
-  };
-
-  const filteredProducts: IProduct[] = products.filter((product: IProduct) => {
-    const averageRating = averageRatings[product.id] || 0;
-
-    return (
-      isPriceMatch(product.price, priceFilter) &&
-      isRatingMatch(averageRating, ratingFilter) &&
-      isCategoryMatch(product.category, categoryFilter) &&
-      isSearchMatch(product.title, searchTerm)
-    );
-  });
-
-  if (status === 'loading') {
-    return <Loading />;
-  }
-
   if (status === 'failed') {
     return <div>{error}</div>;
   }
-
-  const handleAddToCart = (product: IProduct) => {
-    dispatch(
-      addToCart({
-        id: parseInt(product.id),
-        name: product.title,
-        price: product.price,
-        image: product.image,
-        quantity: 1,
-      })
-    );
-    toast.success('Item added to cart');
-  };
 
   const handleAddToWishlist = (product: IProduct) => {
     const wishListItem: IWishListItem = {
@@ -420,15 +309,21 @@ const ProductList: React.FC = () => {
 
   const handleResetFilter = () => {
     dispatch(resetFilter());
-    setPriceFilter('all');
-    setRatingFilter('all');
-    setCategoryFilter('all');
+
+    handlePriceFilterChange('all');
+    handleRatingFilterChange('all');
+    handleCategoryFilterChange('all');
   };
 
   return (
     <Container>
       <FilterBox>
-        <FilterDropdown value={priceFilter} onChange={handlePriceFilterChange}>
+        <FilterDropdown
+          value={priceFilter}
+          onChange={(e) =>
+            handlePriceFilterChange(e.target.value as PriceFilter)
+          }
+        >
           <option value="all">All Prices</option>
           <option value="low">Low ($50)</option>
           <option value="medium">Medium ($50 - $100)</option>
@@ -437,7 +332,9 @@ const ProductList: React.FC = () => {
 
         <FilterDropdown
           value={ratingFilter}
-          onChange={handleRatingFilterChange}
+          onChange={(e) =>
+            handleRatingFilterChange(e.target.value as RatingFilter)
+          }
         >
           <option value="all">All Ratings</option>
           <option value="1-star">1 Star</option>
@@ -449,7 +346,7 @@ const ProductList: React.FC = () => {
 
         <FilterDropdown
           value={categoryFilter}
-          onChange={handleCategoryFilterChange}
+          onChange={(e) => handleCategoryFilterChange(e.target.value)}
         >
           <option value="all">All Categories</option>
           <option value="electronics">Electronics</option>
@@ -459,9 +356,7 @@ const ProductList: React.FC = () => {
         </FilterDropdown>
 
         <FilterButton onClick={handleResetFilter}>Reset Filters</FilterButton>
-        <ToggleButton
-          onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-        >
+        <ToggleButton onClick={handleViewModeChange}>
           {viewMode === 'grid' ? 'List' : 'Grid'} View
         </ToggleButton>
         <MyPieChart />
