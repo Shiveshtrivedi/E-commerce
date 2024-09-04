@@ -4,6 +4,7 @@ import { AppDispatch } from '../redux/Store';
 import { addProduct, addProductToHistory } from '../redux/slices/ProductSlice';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { TCategoryFilter } from '../utils/interface/types';
 
 const FormContainer = styled.div`
   padding: 20px;
@@ -68,10 +69,10 @@ const SubmitButton = styled.button`
 `;
 
 const AddProductPage: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [price, setPrice] = useState('');
-  const [image, setImage] = useState('');
-  const [category, setCategory] = useState('electronics');
+  const [title, setTitle] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
+  const [image, setImage] = useState<string>('');
+  const [category, setCategory] = useState<string>('electronics');
 
   const dispatch = useDispatch<AppDispatch>();
 

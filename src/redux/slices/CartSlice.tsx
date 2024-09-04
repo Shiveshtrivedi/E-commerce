@@ -3,19 +3,22 @@ import {
   saveCartToCookies,
   saveOrdersToCookies,
   getOrdersFromCookies,
+  getCartFromCookies,
 } from '../../utils/CookieUtils';
-import { ICartItem, ICartState, IOrder } from '../../utils/interface/Interface';
+import { ICartItem, ICartState, IOrder } from '../../utils/interface/types';
 
-const loadCartFromStorage = () => {
-  const localStorageCart = localStorage.getItem('cart');
-  if (localStorageCart) {
-    return JSON.parse(localStorageCart);
+const loadCartFromStorage = (userId: string | null) => {
+  if (userId) {
+    const localStorageCart = localStorage.getItem(`cart_${userId}`);
+    if (localStorageCart) {
+      return JSON.parse(localStorageCart);
+    }
   }
   return [];
 };
 
 const initialState: ICartState = {
-  items: loadCartFromStorage(),
+  items: loadCartFromStorage(null),
   totalAmount: parseFloat(localStorage.getItem('totalAmount') ?? '0'),
   totalItems: 0,
   userId: null,
@@ -27,7 +30,8 @@ const cartSlice = createSlice({
   reducers: {
     setUserId(state, action: PayloadAction<string>) {
       state.userId = action.payload;
-      const localStorageCart = localStorage.getItem('cart');
+      state.items = loadCartFromStorage(action.payload);
+      const localStorageCart = localStorage.getItem(`cart_${action.payload}`);
       if (localStorageCart) {
         state.items = JSON.parse(localStorageCart);
       }
@@ -64,7 +68,7 @@ const cartSlice = createSlice({
         0
       );
 
-      localStorage.setItem('cart', JSON.stringify(state.items));
+      localStorage.setItem(`cart_${state.userId}`, JSON.stringify(state.items));
     },
 
     removeToCart(state, action: PayloadAction<number>) {
@@ -92,7 +96,10 @@ const cartSlice = createSlice({
           0
         );
 
-        localStorage.setItem('cart', JSON.stringify(state.items));
+        localStorage.setItem(
+          `cart_${state.userId}`,
+          JSON.stringify(state.items)
+        );
       }
     },
 
@@ -103,7 +110,7 @@ const cartSlice = createSlice({
       state.totalAmount = 0;
       state.totalItems = 0;
 
-      localStorage.setItem('cart', JSON.stringify(state.items));
+      localStorage.setItem(`cart_${state.userId}`, JSON.stringify(state.items));
     },
     checkout(state) {
       if (!state.userId) return;
@@ -135,7 +142,7 @@ const cartSlice = createSlice({
       saveOrdersToCookies(state.userId, orders);
 
       saveCartToCookies(state.userId, state.items);
-      localStorage.setItem('cart', JSON.stringify(state.items));
+      localStorage.setItem(`cart_${state.userId}`, JSON.stringify(state.items));
     },
     saveOrder(state, action: PayloadAction<IOrder>) {
       if (!state.userId) return;

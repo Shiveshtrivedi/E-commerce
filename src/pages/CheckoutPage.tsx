@@ -6,7 +6,7 @@ import { clearCart } from '../redux/slices/CartSlice';
 import { AppDispatch, RootState } from '../redux/Store';
 import { saveAddressToCookies } from '../utils/CookieUtils';
 import { addOrder } from '../redux/slices/OrderSlice';
-import { IOrder } from '../utils/interface/Interface';
+import { IOrder } from '../utils/interface/types';
 
 const CheckoutContainer = styled.div`
   display: flex;
@@ -65,11 +65,11 @@ const SubmitButton = styled.button`
 `;
 
 const CheckoutPage: React.FC = () => {
-  const [name, setName] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
+  const [name, setName] = useState<string>('');
+  const [pincode, setPincode] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [state, setState] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const cartItems = useSelector((state: RootState) => state.cart.items);

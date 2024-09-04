@@ -3,7 +3,7 @@ import {
   saveWishlistToCookies,
   getWishlistFromCookies,
 } from '../../utils/CookieUtils';
-import { IWishListItem, IWishListState } from '../../utils/interface/Interface';
+import { IWishListItem, IWishListState } from '../../utils/interface/types';
 
 const initialState: IWishListState = {
   items: [],

@@ -11,7 +11,13 @@ import styled from 'styled-components';
 import { addToWishList, removeToWishList } from '../redux/slices/WishlistSlice';
 import { toast } from 'react-toastify';
 import { fetchReviews } from '../redux/slices/UserReviewSlice';
-import { IProduct, IWishListItem } from '../utils/interface/Interface';
+import {
+  IProduct,
+  IWishListItem,
+  TPriceFilter,
+  TRatingFilter,
+  EStatus,
+} from '../utils/interface/types';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import NoProductFound from './noProductFound';
 import MyPieChart from './pieChart';
@@ -259,33 +265,24 @@ const ProductList: React.FC = () => {
   const averageRatings = useSelector(
     (state: RootState) => state.reviews.averageRatings
   );
-  type PriceFilter = 'all' | 'low' | 'medium' | 'high';
-
-  type RatingFilter =
-    | 'all'
-    | '1-star'
-    | '2-star'
-    | '3-star'
-    | '4-star'
-    | '5-star';
 
   const wishlist = useSelector((state: RootState) => state.wishList.items);
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (status === EStatus.Idle) {
       dispatch(fetchProducts());
-    } else if (status === 'succeeded') {
+    } else if (status === EStatus.Succeeded) {
       products.forEach((product: IProduct) => {
         dispatch(fetchReviews(product.id));
       });
     }
   }, [dispatch, status, products]);
 
-  if (status === 'loading') {
+  if (status === EStatus.Loading) {
     return <Loading />;
   }
 
-  if (status === 'failed') {
+  if (status === EStatus.Failed) {
     return <div>{error}</div>;
   }
 
@@ -325,7 +322,7 @@ const ProductList: React.FC = () => {
         <FilterDropdown
           value={priceFilter}
           onChange={(e) =>
-            handlePriceFilterChange(e.target.value as PriceFilter)
+            handlePriceFilterChange(e.target.value as TPriceFilter)
           }
         >
           <option value="all">All Prices</option>
@@ -337,7 +334,7 @@ const ProductList: React.FC = () => {
         <FilterDropdown
           value={ratingFilter}
           onChange={(e) =>
-            handleRatingFilterChange(e.target.value as RatingFilter)
+            handleRatingFilterChange(e.target.value as TRatingFilter)
           }
         >
           <option value="all">All Ratings</option>

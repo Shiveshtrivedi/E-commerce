@@ -108,7 +108,7 @@ const PaymentPage: React.FC = () => {
     if (!latestOrder) return;
 
     const options: any = {
-      key: 'rzp_test_8aCsFUFy8E4VoU',
+      key: process.env.REACT_APP_RAZORPAY_CLIENT_ID,
       amount: latestOrder.totalAmount * 100,
       currency: 'INR',
       name: 'ITT',

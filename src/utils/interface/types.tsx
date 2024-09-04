@@ -3,6 +3,7 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
+  profileImage?: string;
 }
 
 export interface IAuthState {
@@ -152,4 +153,21 @@ export interface IAddressDetails {
   state: string;
 }
 
+export type TRatingFilter =
+  | 'all'
+  | '1-star'
+  | '2-star'
+  | '3-star'
+  | '4-star'
+  | '5-star';
 
+export type TPriceFilter = 'all' | 'low' | 'medium' | 'high';
+
+export type TCategoryFilter = 'all' | 'electronics' | 'books' | 'clothing' | 'home';
+
+export enum EStatus {
+  Idle = 'idle',
+  Loading = 'loading',
+  Succeeded = 'succeeded',
+  Failed = 'failed',
+}

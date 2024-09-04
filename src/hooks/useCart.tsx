@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { addToCart } from '../redux/slices/CartSlice';
 import { useDispatch } from 'react-redux';
-import { IProduct } from '../utils/interface/Interface';
+import { IProduct } from '../utils/interface/types';
 
 export const useAddToCart = () => {
   const dispatch = useDispatch();

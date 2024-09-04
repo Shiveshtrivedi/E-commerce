@@ -82,6 +82,7 @@ const ProfilePage: React.FC = () => {
     name: '',
     email: '',
   });
+
   const [address, setAddress] = useState<{
     name: string;
     pincode: string;
@@ -95,7 +96,8 @@ const ProfilePage: React.FC = () => {
     city: '',
     state: '',
   });
-  const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const api_url = process.env.REACT_APP_USER_API_URL;
   useEffect(() => {

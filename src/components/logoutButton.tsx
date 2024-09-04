@@ -4,6 +4,7 @@ import { logout } from '../redux/slices/AuthSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/Store';
 import Loading from './loading';
+import { EStatus } from '../utils/interface/types';
 
 const LogoutButton: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,7 +19,8 @@ const LogoutButton: React.FC = () => {
       console.error('Logout failed:', error);
     }
   };
-  if (status === 'loading') {
+
+  if (status === EStatus.Loading) {
     return (
       <div>
         <p>

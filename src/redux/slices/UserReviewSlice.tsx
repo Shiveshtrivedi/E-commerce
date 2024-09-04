@@ -5,8 +5,8 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IReview } from '../../utils/interface/Interface';
-import { IReviewsState } from '../../utils/interface/Interface';
+import { IReview } from '../../utils/interface/types';
+import { IReviewsState } from '../../utils/interface/types';
 
 const initialState: IReviewsState = {
   reviews: [],

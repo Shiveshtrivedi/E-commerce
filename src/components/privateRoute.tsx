@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/Store';
-import { IPrivateRouteProps } from '../utils/interface/Interface';
+import { IPrivateRouteProps } from '../utils/interface/types';
 
 const PrivateRoute: React.FC<IPrivateRouteProps> = ({ element }) => {
   const isAuthenticated = useSelector(

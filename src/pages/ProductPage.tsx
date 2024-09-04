@@ -12,7 +12,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import Star from '../components/star';
 import { useAddToCart } from '../hooks/useCart';
 import { useDispatch, useSelector } from 'react-redux';
-import { IProduct } from '../utils/interface/Interface';
+import { IProduct } from '../utils/interface/types';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -67,7 +67,7 @@ const Button = styled.button`
 
 const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const handleAddToCart = useAddToCart();
 

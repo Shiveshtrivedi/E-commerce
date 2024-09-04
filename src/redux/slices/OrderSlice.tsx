@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IOrder, IOrderState } from '../../utils/interface/Interface';
+import { IOrder, IOrderState } from '../../utils/interface/types';
 import {
   saveOrdersToCookies,
   getOrdersFromCookies,

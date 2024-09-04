@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../redux/Store';
 import { signup } from '../redux/slices/AuthSlice';
 import styled from 'styled-components';
+import { validateEmail, validatePassword } from '../utils/Validation';
 
 const SignupWrapper = styled.div`
   display: flex;
@@ -120,53 +121,56 @@ const ErrorText = styled.p`
   }
 `;
 
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface Errors {
+  email?: string;
+  password?: string;
+}
+
 const SignupForm: React.FC = () => {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    password: '',
+  });
+  const [errors, setErrors] = useState<Errors>({});
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const error = useSelector((state: RootState) => state.auth.error);
 
-  const passwordValidationRegex =
-    /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-  const emailValidationRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const validateEmail = (email: string) => {
-    return emailValidationRegex.test(email);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const validateForm = (): boolean => {
+    const newErrors: Errors = {};
+    const { email, password } = formData;
 
-  const validatePassword = (password: string) => {
-    return passwordValidationRegex.test(password);
+    if (!validateEmail(email)) {
+      newErrors.email = 'Please enter a valid email address.';
+    }
+
+    if (!validatePassword(password)) {
+      newErrors.password =
+        'Password must be at least 8 characters long, include one capital letter, and one special character.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let isValid = true;
-
-    if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(null);
-    }
-
-    if (!validatePassword(password)) {
-      setPasswordError(
-        'Password must be at least 8 characters long, include one capital letter, and one special character.'
-      );
-      isValid = false;
-    } else {
-      setPasswordError(null);
-    }
-
-    if (!isValid) return;
+    if (!validateForm()) return;
 
     try {
-      await dispatch(signup({ name, email, password })).unwrap();
+      await dispatch(signup(formData)).unwrap();
       navigate('/login');
     } catch (err) {
       console.error('Failed to signup:', err);
@@ -183,9 +187,10 @@ const SignupForm: React.FC = () => {
             <Input
               id="name"
               type="text"
+              name="name"
               placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
               required
             />
           </div>
@@ -194,24 +199,26 @@ const SignupForm: React.FC = () => {
             <Input
               id="email"
               type="email"
+              name="email"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
               required
             />
-            {emailError && <ErrorText>{emailError}</ErrorText>}
+            {errors.email && <ErrorText>{errors.email}</ErrorText>}
           </div>
           <div>
             <label htmlFor="password">Password:</label>
             <Input
               id="password"
               type="password"
+              name="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
             />
-            {passwordError && <ErrorText>{passwordError}</ErrorText>}
+            {errors.password && <ErrorText>{errors.password}</ErrorText>}
           </div>
           <Button type="submit">Signup</Button>
           {error && <ErrorText>{error}</ErrorText>}

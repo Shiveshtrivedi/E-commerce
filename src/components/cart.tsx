@@ -237,7 +237,7 @@ const Cart: React.FC = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const totalAmount = useSelector((state: RootState) => state.cart.totalAmount);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCheckout = async () => {
     setIsLoading(true);

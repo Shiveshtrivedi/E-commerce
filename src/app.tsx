@@ -24,15 +24,18 @@ import Help from './components/helpPage';
 import SuccessTickAnimation from './components/successTickAnimation';
 import { useDispatch } from 'react-redux';
 import PaymentPage from './pages/PaymentPage';
+import NotFoundPage from './components/pageNotFound';
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const storeUserId = localStorage.getItem('userId');
     if (storeUserId) {
       dispatch({ type: 'auth/setUserId', payload: storeUserId });
     }
   }, [dispatch]);
+
   return (
     <div id="root">
       <Header />
@@ -102,6 +105,7 @@ function App() {
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/help" element={<Help />} />
           <Route path="/products/:category" element={<ProductList />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer />

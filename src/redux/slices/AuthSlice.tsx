@@ -6,7 +6,7 @@ import {
   IAuthState,
   IAuthResponse,
   ICredentials,
-} from '../../utils/interface/Interface';
+} from '../../utils/interface/types';
 
 const API_URL = process.env.REACT_APP_USER_API_URL ?? '';
 

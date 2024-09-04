@@ -4,7 +4,7 @@ import {
   saveAdminHistoryToCookies,
   getAdminHistoryFromCookies,
 } from '../../utils/CookieUtils';
-import { IProduct, IProductState } from '../../utils/interface/Interface';
+import { EStatus, IProduct, IProductState } from '../../utils/interface/types';
 
 const initialState: IProductState = {
   products: [],
@@ -103,18 +103,18 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
-        state.status = 'loading';
+        state.status = EStatus.Loading;
       })
       .addCase(
         fetchProducts.fulfilled,
         (state, action: PayloadAction<IProduct[]>) => {
-          state.status = 'succeeded';
+          state.status = EStatus.Succeeded;
           state.products = action.payload;
           state.filterProducts = action.payload;
         }
       )
       .addCase(fetchProducts.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = EStatus.Failed;
         state.error = action.error.message ?? 'Failed to fetch products';
       })
       .addCase(
@@ -140,7 +140,7 @@ const productSlice = createSlice({
       .addCase(
         fetchProductsByCategory.fulfilled,
         (state, action: PayloadAction<IProduct[]>) => {
-          state.status = 'succeeded';
+          state.status = EStatus.Succeeded;
           state.products = action.payload;
           state.filterProducts = action.payload;
         }
@@ -148,7 +148,7 @@ const productSlice = createSlice({
       .addCase(
         fetchProductsByCategory.rejected,
         (state, action: PayloadAction<string | undefined>) => {
-          state.status = 'failed';
+          state.status = EStatus.Failed;
           state.error =
             action.payload ?? 'Failed to fetch products by category';
         }

@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/Store';
-import { IProduct } from '../utils/interface/Interface';
+import {
+  IProduct,
+  TRatingFilter,
+  TPriceFilter,
+  TCategoryFilter,
+} from '../utils/interface/types';
 import { useLocation } from 'react-router-dom';
-
-type PriceFilter = 'all' | 'low' | 'medium' | 'high';
-type RatingFilter =
-  | 'all'
-  | '1-star'
-  | '2-star'
-  | '3-star'
-  | '4-star'
-  | '5-star';
 
 export const useProductFilter = () => {
   const location = useLocation();
@@ -23,10 +19,10 @@ export const useProductFilter = () => {
   );
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   const wishlist = useSelector((state: RootState) => state.wishList.items);
-  const [priceFilter, setPriceFilter] = useState<PriceFilter>('all');
-  const [ratingFilter, setRatingFilter] = useState<RatingFilter>('all');
-  const [categoryFilter, setCategoryFilter] = useState('all');
-  const [viewMode, setViewMode] = useState('grid');
+  const [priceFilter, setPriceFilter] = useState<TPriceFilter>('all');
+  const [ratingFilter, setRatingFilter] = useState<TRatingFilter>('all');
+  const [categoryFilter, setCategoryFilter] = useState<TCategoryFilter>('all');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [wishlistStatus, setWishlistStatus] = useState<Record<string, boolean>>(
     {}
   );
@@ -43,20 +39,20 @@ export const useProductFilter = () => {
   }, [wishlist]);
   useEffect(() => {
     if (category) {
-      setCategoryFilter(category);
+      setCategoryFilter(category as TCategoryFilter);
     }
   }, [category]);
 
-  const handlePriceFilterChange = (filter: PriceFilter) =>
+  const handlePriceFilterChange = (filter: TPriceFilter) =>
     setPriceFilter(filter);
-  const handleRatingFilterChange = (filter: RatingFilter) =>
+  const handleRatingFilterChange = (filter: TRatingFilter) =>
     setRatingFilter(filter);
   const handleCategoryFilterChange = (category: string) =>
-    setCategoryFilter(category);
+    setCategoryFilter(category as TCategoryFilter);
   const handleViewModeChange = () =>
     setViewMode(viewMode === 'grid' ? 'list' : 'grid');
 
-  const isPriceMatch = (price: number, filter: PriceFilter): boolean => {
+  const isPriceMatch = (price: number, filter: TPriceFilter): boolean => {
     switch (filter) {
       case 'low':
         return price < 50;
@@ -69,7 +65,7 @@ export const useProductFilter = () => {
     }
   };
 
-  const isRatingMatch = (rating: number, filter: RatingFilter): boolean => {
+  const isRatingMatch = (rating: number, filter: TRatingFilter): boolean => {
     switch (filter) {
       case '1-star':
         return rating >= 1 && rating < 2;

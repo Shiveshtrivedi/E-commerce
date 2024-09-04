@@ -4,7 +4,7 @@ import { postReview } from '../redux/slices/UserReviewSlice';
 import { AppDispatch } from '../redux/Store';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
-import { IReviewFormProps } from '../utils/interface/Interface';
+import { IReviewFormProps } from '../utils/interface/types';
 
 const FormContainer = styled.div`
   max-width: 600px;
@@ -82,8 +82,8 @@ const ReviewForm: React.FC<IReviewFormProps> = ({
   productId: string;
   userId: string;
 }) => {
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState<number>(5);
+  const [comment, setComment] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = (e: React.FormEvent) => {
