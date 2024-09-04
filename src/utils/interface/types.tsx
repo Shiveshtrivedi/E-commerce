@@ -163,7 +163,12 @@ export type TRatingFilter =
 
 export type TPriceFilter = 'all' | 'low' | 'medium' | 'high';
 
-export type TCategoryFilter = 'all' | 'electronics' | 'books' | 'clothing' | 'home';
+export type TCategoryFilter =
+  | 'all'
+  | 'electronics'
+  | 'books'
+  | 'clothing'
+  | 'home';
 
 export enum EStatus {
   Idle = 'idle',
