@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
-import { RootState } from '../redux/Store';
+import { RootState } from '../redux/store';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const MyPieChart: React.FC = () => {

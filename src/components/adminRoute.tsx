@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/Store';
+import { RootState } from '../redux/store';
 import { IAdminRouteProps } from '../utils/interface/types';
 
 const AdminRoute: React.FC<IAdminRouteProps> = ({ element }) => {

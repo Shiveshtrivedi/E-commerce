@@ -3,7 +3,6 @@ import {
   saveCartToCookies,
   saveOrdersToCookies,
   getOrdersFromCookies,
-  getCartFromCookies,
 } from '../../utils/CookieUtils';
 import { ICartItem, ICartState, IOrder } from '../../utils/interface/types';
 

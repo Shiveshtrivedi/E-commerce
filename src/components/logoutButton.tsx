@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../redux/slices/AuthSlice';
+import { logout } from '../redux/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/Store';
+import { AppDispatch, RootState } from '../redux/store';
 import Loading from './loading';
 import { EStatus } from '../utils/interface/types';
 

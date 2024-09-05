@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/slices/AuthSlice';
-import { setUserId as setCartUserId } from '../redux/slices/CartSlice';
-import { setUserId as setWishlistUserId } from '../redux/slices/WishlistSlice';
-import { setUserId as adminHistoryUserId } from '../redux/slices/ProductSlice';
+import { login } from '../redux/slices/authSlice';
+import { setUserId as setCartUserId } from '../redux/slices/cartSlice';
+import { setUserId as setWishlistUserId } from '../redux/slices/wishlistSlice';
+import { setUserId as adminHistoryUserId } from '../redux/slices/productSlice';
 import { useNavigate } from 'react-router-dom';
-import { RootState, AppDispatch } from '../redux/Store';
+import { RootState, AppDispatch } from '../redux/store';
 import styled from 'styled-components';
-import { initializeOrders } from '../redux/slices/OrderSlice';
+import { initializeOrders } from '../redux/slices/orderSlice';
 
 const LoginWrapper = styled.div`
   display: flex;

@@ -43,9 +43,12 @@ export const login = createAsyncThunk<
       const user = users[0];
 
       if (user.password === credentials.password) {
+        const isAdmin = user.email.endsWith('@intimetec.com');
+        const updatedUser = { ...user, idAdmin: isAdmin };
+
         localStorage.setItem('token', user.id);
         setCookie('token', user.id, { expires: 1 });
-        return { user, token: user.id };
+        return { user: updatedUser, token: user.id };
       } else {
         return rejectWithValue('Incorrect password');
       }
@@ -72,9 +75,14 @@ export const signup = createAsyncThunk<
       password: credentials.password,
     });
     const user = response.data as IUser;
+
+    const isAdmin = user.email.endsWith('@intimetec.com');
+    const updatedUser = { ...user, idAdmin: isAdmin };
+
     localStorage.setItem('token', user.id);
     setCookie('token', user.id, { expires: 1 });
-    return { user, token: user.id };
+
+    return { user: updatedUser, token: user.id };
   } catch (error) {
     const axiosError = error as AxiosError;
     return rejectWithValue(
@@ -112,7 +120,10 @@ const authSlice = createSlice({
           state.token = action.payload.token;
           state.error = null;
           state.userEmail = action.payload.user.email;
-          state.isAdmin = action.payload.user.email.endsWith('@intimetec.com');
+          state.isAdmin =
+            action.payload.user.idAdmin !== undefined
+              ? action.payload.user.idAdmin
+              : action.payload.user.email.endsWith('@intimetec.com');
           localStorage.setItem('user', JSON.stringify(action.payload.user));
         }
       )
@@ -133,7 +144,10 @@ const authSlice = createSlice({
           state.token = action.payload.token;
           state.error = null;
           state.userEmail = action.payload.user.email;
-          state.isAdmin = action.payload.user.email.endsWith('@intimetec.com');
+          state.isAdmin =
+            action.payload.user.idAdmin !== undefined
+              ? action.payload.user.idAdmin
+              : action.payload.user.email.endsWith('@intimetec.com');
           localStorage.setItem('user', JSON.stringify(action.payload.user));
         }
       )

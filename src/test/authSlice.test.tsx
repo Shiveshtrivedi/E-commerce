@@ -1,4 +1,4 @@
-import authReducer, { logout } from '../redux/slices/AuthSlice';
+import authReducer, { logout } from '../redux/slices/authSlice';
 
 test('handleLogout', () => {
   const initialState = {

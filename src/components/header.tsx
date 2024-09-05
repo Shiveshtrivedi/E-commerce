@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AppDispatch, RootState } from '../redux/Store';
+import { AppDispatch, RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsCart } from 'react-icons/bs';
-import { setSearchTerm } from '../redux/slices/SearchSlice';
+import { setSearchTerm } from '../redux/slices/searchSlice';
 import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.header`

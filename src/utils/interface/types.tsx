@@ -4,6 +4,7 @@ export interface IUser {
   email: string;
   password: string;
   profileImage?: string;
+  idAdmin?: boolean;
 }
 
 export interface IAuthState {
@@ -166,9 +167,9 @@ export type TPriceFilter = 'all' | 'low' | 'medium' | 'high';
 export type TCategoryFilter =
   | 'all'
   | 'electronics'
-  | 'books'
-  | 'clothing'
-  | 'home';
+  | 'mens clothing'
+  | 'womens clothing'
+;
 
 export enum EStatus {
   Idle = 'idle',

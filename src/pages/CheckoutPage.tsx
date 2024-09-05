@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from '../redux/slices/CartSlice';
-import { AppDispatch, RootState } from '../redux/Store';
+import { clearCart } from '../redux/slices/cartSlice';
+import { AppDispatch, RootState } from '../redux/store';
 import { saveAddressToCookies } from '../utils/CookieUtils';
-import { addOrder } from '../redux/slices/OrderSlice';
+import { addOrder } from '../redux/slices/orderSlice';
 import { IOrder } from '../utils/interface/types';
 
 const CheckoutContainer = styled.div`

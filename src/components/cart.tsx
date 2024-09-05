@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/Store';
+import { AppDispatch, RootState } from '../redux/store';
 import {
   addToCart,
   clearCart,
   removeToCart,
   checkout,
-} from '../redux/slices/CartSlice';
+} from '../redux/slices/cartSlice';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';

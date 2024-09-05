@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/Store';
+import { AppDispatch, RootState } from '../redux/store';
 import {
   clearHistory,
   removeProductFromHistory,
-} from '../redux/slices/ProductSlice';
+} from '../redux/slices/productSlice';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 

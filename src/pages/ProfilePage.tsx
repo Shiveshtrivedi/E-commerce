@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../redux/Store';
-import { logout } from '../redux/slices/AuthSlice';
+import { AppDispatch, RootState } from '../redux/store';
+import { logout } from '../redux/slices/authSlice';
 import axios from 'axios';
 import Loading from '../components/loading';
 import { toast } from 'react-toastify';

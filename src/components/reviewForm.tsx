@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { postReview } from '../redux/slices/UserReviewSlice';
-import { AppDispatch } from '../redux/Store';
+import { postReview } from '../redux/slices/userReviewSlice';
+import { AppDispatch } from '../redux/store';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { IReviewFormProps } from '../utils/interface/types';

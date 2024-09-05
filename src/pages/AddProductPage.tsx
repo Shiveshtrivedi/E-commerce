@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../redux/Store';
-import { addProduct, addProductToHistory } from '../redux/slices/ProductSlice';
+import { AppDispatch } from '../redux/store';
+import { addProduct, addProductToHistory } from '../redux/slices/productSlice';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { TCategoryFilter } from '../utils/interface/types';
@@ -72,7 +72,7 @@ const AddProductPage: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [image, setImage] = useState<string>('');
-  const [category, setCategory] = useState<string>('electronics');
+  const [category, setCategory] = useState<TCategoryFilter>('electronics');
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -129,7 +129,7 @@ const AddProductPage: React.FC = () => {
           <Label>Category</Label>
           <Select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => setCategory(e.target.value as TCategoryFilter)}
             required
           >
             <option value="electronics">Electronics</option>

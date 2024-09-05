@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/Store';
-import { removeToWishList } from '../redux/slices/WishlistSlice';
+import { RootState } from '../redux/store';
+import { removeToWishList } from '../redux/slices/wishlistSlice';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';

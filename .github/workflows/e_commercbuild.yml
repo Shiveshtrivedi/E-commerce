@@ -33,7 +33,7 @@ jobs:
         run: npm i --legacy-peer-deps
 
       - name: Build the app
-        run: npm run build 
+        run: npm run build
 
       - name: Format code with Prettier
         run: npm run format

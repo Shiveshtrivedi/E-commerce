@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../redux/Store';
-import { initializeOrders } from '../redux/slices/OrderSlice';
+import { RootState } from '../redux/store';
+import { initializeOrders } from '../redux/slices/orderSlice';
 import { getOrdersFromCookies } from '../utils/CookieUtils';
 import { useNavigate } from 'react-router-dom';
 

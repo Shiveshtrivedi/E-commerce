@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../redux/Store';
+import { RootState, AppDispatch } from '../redux/store';
 import {
   deleteProduct,
   fetchProducts,
   resetFilter,
-} from '../redux/slices/ProductSlice';
+} from '../redux/slices/productSlice';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { addToWishList, removeToWishList } from '../redux/slices/WishlistSlice';
+import { addToWishList, removeToWishList } from '../redux/slices/wishlistSlice';
 import { toast } from 'react-toastify';
-import { fetchReviews } from '../redux/slices/UserReviewSlice';
+import { fetchReviews } from '../redux/slices/userReviewSlice';
 import {
   IProduct,
   IWishListItem,

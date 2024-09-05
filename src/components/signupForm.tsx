@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AppDispatch, RootState } from '../redux/Store';
-import { signup } from '../redux/slices/AuthSlice';
+import { AppDispatch, RootState } from '../redux/store';
+import { signup } from '../redux/slices/authSlice';
 import styled from 'styled-components';
 import { validateEmail, validatePassword } from '../utils/Validation';
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../redux/Store';
-import { initializeOrders } from '../redux/slices/OrderSlice';
+import { RootState } from '../redux/store';
+import { initializeOrders } from '../redux/slices/orderSlice';
 import styled from 'styled-components';
 
 const HistoryContainer = styled.div`
