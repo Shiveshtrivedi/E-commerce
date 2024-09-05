@@ -56,6 +56,20 @@ const reviewSlice = createSlice({
         (state, action: PayloadAction<IReview[]>) => {
           state.reviews = action.payload;
           state.error = null;
+          const productId = action.payload[0]?.productId; // Assuming all reviews belong to the same product
+          if (productId) {
+            const productReviews = state.reviews.filter(
+              (review) => review.productId === productId
+            );
+            const totalRating = productReviews.reduce(
+              (acc, review) => acc + review.rating,
+              0
+            );
+            const averageRating = productReviews.length
+              ? totalRating / productReviews.length
+              : 0;
+            state.averageRatings[productId] = averageRating; // Store average rating
+          }
         }
       )
       .addCase(

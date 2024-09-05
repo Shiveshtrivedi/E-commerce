@@ -168,8 +168,7 @@ export type TCategoryFilter =
   | 'all'
   | 'electronics'
   | 'mens clothing'
-  | 'womens clothing'
-;
+  | 'womens clothing';
 
 export enum EStatus {
   Idle = 'idle',

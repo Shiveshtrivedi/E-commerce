@@ -89,18 +89,18 @@ describe('productReducer', () => {
       state.adminProductsHistory
     );
   });
-  test('removeProductFromHistory',()=>{
-    let state = productReducer(initialState,setUserId('1'));
-    state = productReducer(state,removeProductFromHistory('1'));
+  test('removeProductFromHistory', () => {
+    let state = productReducer(initialState, setUserId('1'));
+    state = productReducer(state, removeProductFromHistory('1'));
     expect(state.adminProductsHistory).toEqual([]);
-  })
-  test('clearHistory',()=>{
-    let state = productReducer(initialState,setUserId('1'));
-    state = productReducer(state,clearHistory());
+  });
+  test('clearHistory', () => {
+    let state = productReducer(initialState, setUserId('1'));
+    state = productReducer(state, clearHistory());
     expect(state.adminProductsHistory).toEqual([]);
-  })
-  test('resetFilter',()=>{
-    const state = productReducer(initialState,resetFilter());
+  });
+  test('resetFilter', () => {
+    const state = productReducer(initialState, resetFilter());
     expect(state.filterProducts).toEqual(state.products);
-  })
+  });
 });

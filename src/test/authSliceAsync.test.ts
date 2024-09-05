@@ -8,7 +8,7 @@ jest.mock('axios');
 const API_URL = process.env.REACT_APP_USER_API_URL ?? '';
 
 describe('authSliceAsync', () => {
-  describe('login', () => {
+  describe('login and signup', () => {
     test('should return user and token when login is successful', async () => {
       const mockUser = {
         id: '1',
@@ -45,11 +45,6 @@ describe('authSliceAsync', () => {
       expect(state.isAuthenticated).toBe(true);
       expect(state.error).toBe(null);
     });
-  });
-});
-
-describe('authSliceAsync', () => {
-  describe('login', () => {
     test('should return user and token when login is successful as admin', async () => {
       const mockUser = {
         id: '2',
@@ -86,11 +81,6 @@ describe('authSliceAsync', () => {
       expect(state.isAuthenticated).toBe(true);
       expect(state.error).toBe(null);
     });
-  });
-});
-
-describe('authSliceAsync', () => {
-  describe('signup', () => {
     test('should return user and token when signup is successful', async () => {
       const mockUser = {
         id: '3',
@@ -121,11 +111,6 @@ describe('authSliceAsync', () => {
       expect(state.isAuthenticated).toBe(true);
       expect(state.error).toBe(null);
     });
-  });
-});
-
-describe('authSliceAsync', () => {
-  describe('signup', () => {
     test('should return user and token when signup is successful', async () => {
       const mockUser = {
         id: '4',

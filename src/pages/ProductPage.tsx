@@ -73,6 +73,9 @@ const ProductPage: React.FC = () => {
 
   const [product, setProduct] = useState<IProduct | null>(null);
   const dispatch = useDispatch<AppDispatch>();
+  const averageRating = useSelector(
+    (state: RootState) => state.reviews.averageRatings[id ?? ''] || 0
+  );
 
   const products = useSelector((state: RootState) => state.products.products);
   useEffect(() => {
@@ -118,7 +121,7 @@ const ProductPage: React.FC = () => {
         <Image src={product.image} alt={product.title} />
       </Zoom>
       <Title>{product.title}</Title>
-      {product.rating && <Star reviews={product.rating.rate} />}
+      <Star reviews={averageRating} />
       <Price>{product.price}$</Price>
       <Description>{product.description}</Description>
       <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
