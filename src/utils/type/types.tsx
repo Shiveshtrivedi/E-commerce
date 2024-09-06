@@ -9,11 +9,11 @@ export interface IUser {
 
 export interface IAuthState {
   isAuthenticated: boolean;
-  user: IUser | null;
-  token: string | null;
-  error: string | null;
+  user: IUser;
+  token: string;
+  error: string;
   isAdmin: boolean;
-  userEmail: string | null;
+  userEmail: string;
 }
 
 export interface IAuthResponse {
@@ -38,7 +38,7 @@ export interface ICartItem {
 export interface ICartState {
   items: ICartItem[];
   totalAmount: number;
-  userId: string | null;
+  userId: string;
   totalItems: number;
 }
 
@@ -59,8 +59,8 @@ export interface IProductState {
   adminProductsHistory: IProduct[];
   filterProducts: IProduct[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-  id: string | null;
+  error: string;
+  id: string;
 }
 
 export interface IReview {
@@ -74,7 +74,7 @@ export interface IReview {
 
 export interface IReviewsState {
   reviews: IReview[];
-  error: string | null;
+  error: string;
 }
 
 export interface IWishListItem {
@@ -86,7 +86,7 @@ export interface IWishListItem {
 
 export interface IWishListState {
   items: IWishListItem[];
-  userId: string | null;
+  userId: string;
 }
 
 export interface IAdminRouteProps {
@@ -119,7 +119,7 @@ export interface IOrder {
 
 export interface IOrderState {
   orders: IOrder[];
-  userId: string | null;
+  userId: string;
 }
 
 export interface IReviewFormProps {
@@ -135,7 +135,7 @@ export interface ISearchState {
 export interface IReviewsState {
   reviews: IReview[];
   averageRatings: Record<string, number>;
-  error: string | null;
+  error: string;
 }
 
 export interface ICookieOptions {

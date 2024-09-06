@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { RootState } from '../redux/store';
 import { initializeOrders } from '../redux/slices/orderSlice';
-import { getOrdersFromCookies } from '../utils/CookieUtils';
+import { getOrdersFromCookies } from '../utils/cookie/cookieUtils';
 import { useNavigate } from 'react-router-dom';
+import { IOrder } from '../utils/type/types';
 
 const loadRazorpayScript = (src: string) => {
   return new Promise<void>((resolve, reject) => {
@@ -77,7 +78,20 @@ const PaymentPage: React.FC = () => {
   const dispatch = useDispatch();
   const orders = useSelector((state: RootState) => state.order.orders);
   const userId = useSelector((state: RootState) => state.cart.userId);
-  const [latestOrder, setLatestOrder] = useState<any>(null);
+  const [latestOrder, setLatestOrder] = useState<IOrder>({
+    id: '',
+    userId: '',
+    items: [],
+    totalAmount: 0,
+    address: {
+      name: '',
+      pincode: '',
+      phoneNumber: '',
+      city: '',
+      state: '',
+    },
+    createdAt: '',
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,7 +99,7 @@ const PaymentPage: React.FC = () => {
       dispatch(initializeOrders(userId));
       const checkcookieOrder = getOrdersFromCookies(userId);
       if (checkcookieOrder) {
-        setLatestOrder(checkcookieOrder);
+        setLatestOrder(checkcookieOrder[0]);
       }
     }
   }, [userId, dispatch]);
@@ -107,13 +121,13 @@ const PaymentPage: React.FC = () => {
   const handlePayment = () => {
     if (!latestOrder) return;
 
-    const options: any = {
+    const options = {
       key: process.env.REACT_APP_RAZORPAY_CLIENT_ID,
       amount: latestOrder.totalAmount * 100,
       currency: 'INR',
       name: 'ITT',
       description: 'Test Transaction',
-      handler: function (response: any) {
+      handler: function (response: { razorpay_payment_id: string }) {
         alert(`Payment ID: ${response.razorpay_payment_id}`);
         navigate('/checkout/success');
       },
@@ -152,7 +166,7 @@ const PaymentPage: React.FC = () => {
             {latestOrder.items.length === 0 ? (
               <OrderItem>No items found.</OrderItem>
             ) : (
-              latestOrder.items.map((item: any) => (
+              latestOrder.items.map((item) => (
                 <OrderItem key={item.id}>
                   {item.name} - ${item.price} x {item.quantity}
                 </OrderItem>

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../redux/store';
 import { signup } from '../redux/slices/authSlice';
 import styled from 'styled-components';
-import { validateEmail, validatePassword } from '../utils/Validation';
+import { validateEmail, validatePassword } from '../utils/validation/validation';
 
 const SignupWrapper = styled.div`
   display: flex;

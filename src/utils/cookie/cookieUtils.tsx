@@ -1,5 +1,12 @@
 import Cookies from 'js-cookie';
-import { IOrder, ICookieOptions, IAddressDetails } from './interface/types';
+import {
+  IOrder,
+  ICookieOptions,
+  IAddressDetails,
+  ICartItem,
+  IWishListItem,
+  IProduct,
+} from '../type/types';
 
 export const setCookie = (
   name: string,
@@ -9,8 +16,8 @@ export const setCookie = (
   Cookies.set(name, value, { ...options, expires: 1, sameSite: 'Strict' });
 };
 
-export const getCookie = (name: string): string | undefined => {
-  return Cookies.get(name);
+export const getCookie = (name: string): string => {
+  return Cookies.get(name) as string;
 };
 
 export const removeCookie = (name: string): void => {
@@ -19,7 +26,7 @@ export const removeCookie = (name: string): void => {
 
 const getUserCartKey = (userId: string) => `cart_${userId}`;
 
-export const saveCartToCookies = (userId: string, cart: any): void => {
+export const saveCartToCookies = (userId: string, cart: ICartItem[]): void => {
   const cartKey = getUserCartKey(userId);
   Cookies.set(cartKey, JSON.stringify(cart), {
     expires: 7,
@@ -35,7 +42,10 @@ export const getCartFromCookies = (userId: string) => {
 };
 const getUserWishlistKey = (userId: string) => `wishlist_${userId}`;
 
-export const saveWishlistToCookies = (userId: string, wishlist: any) => {
+export const saveWishlistToCookies = (
+  userId: string,
+  wishlist: IWishListItem[]
+) => {
   const wishlistKey = getUserWishlistKey(userId);
   Cookies.set(wishlistKey, JSON.stringify(wishlist), {
     expires: 7,
@@ -51,7 +61,10 @@ export const getWishlistFromCookies = (userId: string) => {
 
 const getAdminHistoryKey = (userId: string) => `adminHistory_${userId}`;
 
-export const saveAdminHistoryToCookies = (userId: string, history: any[]) => {
+export const saveAdminHistoryToCookies = (
+  userId: string,
+  history: IProduct[]
+) => {
   const historyKey = getAdminHistoryKey(userId);
   Cookies.set(historyKey, JSON.stringify(history), {
     expires: 7,
@@ -79,19 +92,17 @@ export const saveAddressToCookies = (
   });
 };
 
-export const getAddressFromCookies = (
-  userId: string
-): IAddressDetails | null => {
+export const getAddressFromCookies = (userId: string): IAddressDetails => {
   const address = Cookies.get(`userAddress_${userId}`);
 
-  return address ? JSON.parse(address) : null;
+  return address ? JSON.parse(address) : '';
 };
 
 export const saveOrdersToCookies = (userId: string, orders: IOrder[]) => {
   Cookies.set(`orders_${userId}`, JSON.stringify(orders), { expires: 7 });
 };
 
-export const getOrdersFromCookies = (userId: string): IOrder[] | null => {
+export const getOrdersFromCookies = (userId: string): IOrder[] | '' => {
   const orders = Cookies.get(`orders_${userId}`);
-  return orders ? JSON.parse(orders) : null;
+  return orders ? JSON.parse(orders) : '';
 };

@@ -6,7 +6,7 @@ import {
   TRatingFilter,
   TPriceFilter,
   TCategoryFilter,
-} from '../utils/interface/types';
+} from '../utils/type/types';
 import { useLocation } from 'react-router-dom';
 
 export const useProductFilter = () => {

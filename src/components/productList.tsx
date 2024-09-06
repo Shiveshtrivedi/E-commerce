@@ -17,7 +17,7 @@ import {
   TPriceFilter,
   TRatingFilter,
   EStatus,
-} from '../utils/interface/types';
+} from '../utils/type/types';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import NoProductFound from './noProductFound';
 import MyPieChart from './pieChart';
@@ -25,6 +25,7 @@ import Star from './star';
 import { useAddToCart } from '../hooks/useCart';
 import { useProductFilter } from '../hooks/useFilter';
 import Loading from './loading';
+import NetworkErrorPage from './networkError';
 
 const Container = styled.div`
   display: flex;
@@ -122,6 +123,9 @@ const Button = styled.button`
   }
 `;
 
+const DeleteButton = styled(Button)`
+  background-color: #dc3545;
+`;
 const ProductNameContainer = styled.div`
   position: relative;
   display: inline-block;
@@ -244,10 +248,8 @@ const WishlistButton = styled.div<{ viewMode: string; isInWishlist: boolean }>`
 
 const ProductList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-
   const products = useSelector((state: RootState) => state.products.products);
   const status = useSelector((state: RootState) => state.products.status);
-  const error = useSelector((state: RootState) => state.products.error);
   const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
   const handleAddToCart = useAddToCart();
   const {
@@ -283,7 +285,11 @@ const ProductList: React.FC = () => {
   }
 
   if (status === EStatus.Failed) {
-    return <div>{error}</div>;
+    return (
+      <div>
+        <NetworkErrorPage />
+      </div>
+    );
   }
 
   const handleAddToWishlist = (product: IProduct) => {
@@ -403,9 +409,9 @@ const ProductList: React.FC = () => {
                   </Button>
                 </div>
                 {isAdmin && (
-                  <Button onClick={() => handleToDelete(product.id)}>
+                  <DeleteButton onClick={() => handleToDelete(product.id)}>
                     Delete
-                  </Button>
+                  </DeleteButton>
                 )}
               </ProductGridItem>
             ) : (
@@ -443,9 +449,9 @@ const ProductList: React.FC = () => {
                   </Button>
                 </div>
                 {isAdmin && (
-                  <Button onClick={() => handleToDelete(product.id)}>
+                  <DeleteButton onClick={() => handleToDelete(product.id)}>
                     Delete
-                  </Button>
+                  </DeleteButton>
                 )}
               </ProductListItem>
             )

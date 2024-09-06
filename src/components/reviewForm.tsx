@@ -4,7 +4,7 @@ import { postReview } from '../redux/slices/userReviewSlice';
 import { AppDispatch } from '../redux/store';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
-import { IReviewFormProps } from '../utils/interface/types';
+import { IReviewFormProps } from '../utils/type/types';
 
 const FormContainer = styled.div`
   max-width: 600px;

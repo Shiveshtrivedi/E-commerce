@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import {
   getAddressFromCookies,
   saveAddressToCookies,
-} from '../utils/CookieUtils';
+} from '../utils/cookie/cookieUtils';
 
 const Container = styled.div`
   max-width: 800px;

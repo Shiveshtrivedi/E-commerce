@@ -3,16 +3,16 @@ import axios from 'axios';
 import {
   saveAdminHistoryToCookies,
   getAdminHistoryFromCookies,
-} from '../../utils/CookieUtils';
-import { EStatus, IProduct, IProductState } from '../../utils/interface/types';
+} from '../../utils/cookie/cookieUtils';
+import { EStatus, IProduct, IProductState } from '../../utils/type/types';
 
 const initialState: IProductState = {
   products: [],
   adminProductsHistory: [],
   filterProducts: [],
   status: 'idle',
-  error: null,
-  id: null,
+  error: '',
+  id: '',
 };
 
 export const fetchProducts = createAsyncThunk<IProduct[]>(
@@ -76,7 +76,7 @@ const productSlice = createSlice({
       const updatedHistory = [...state.adminProductsHistory, action.payload];
       state.adminProductsHistory = updatedHistory;
 
-      if (state.id !== null) {
+      if (state.id !== '') {
         saveAdminHistoryToCookies(state.id, updatedHistory);
       }
     },

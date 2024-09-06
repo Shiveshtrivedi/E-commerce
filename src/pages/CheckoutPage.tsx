@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../redux/slices/cartSlice';
 import { AppDispatch, RootState } from '../redux/store';
-import { saveAddressToCookies } from '../utils/CookieUtils';
+import { saveAddressToCookies } from '../utils/cookie/cookieUtils';
 import { addOrder } from '../redux/slices/orderSlice';
-import { IOrder } from '../utils/interface/types';
+import { IOrder } from '../utils/type/types';
 
 const CheckoutContainer = styled.div`
   display: flex;

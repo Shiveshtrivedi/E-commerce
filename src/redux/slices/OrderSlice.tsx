@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IOrder, IOrderState } from '../../utils/interface/types';
+import { IOrder, IOrderState } from '../../utils/type/types';
 import {
   saveOrdersToCookies,
   getOrdersFromCookies,
-} from '../../utils/CookieUtils';
+} from '../../utils/cookie/cookieUtils';
 
 const initialState: IOrderState = {
   orders: [],
-  userId: null,
+  userId: '',
 };
 
 const orderSlice = createSlice({

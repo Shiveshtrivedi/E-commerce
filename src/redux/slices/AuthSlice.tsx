@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
-import { setCookie, removeCookie } from '../../utils/CookieUtils';
+import { setCookie, removeCookie } from '../../utils/cookie/cookieUtils';
 import {
   IUser,
   IAuthState,
   IAuthResponse,
   ICredentials,
-} from '../../utils/interface/types';
+} from '../../utils/type/types';
 
 const API_URL = process.env.REACT_APP_USER_API_URL ?? '';
 
@@ -15,13 +15,15 @@ const storedUser = localStorage.getItem('user');
 
 const initialState: IAuthState = {
   isAuthenticated: !!storedToken,
-  user: storedUser ? JSON.parse(storedUser) : null,
-  token: storedToken,
-  error: null,
+  user: storedUser
+    ? JSON.parse(storedUser)
+    : { name: '', email: '', password: '', id: '' },
+  token: storedToken ?? '',
+  error: '',
   isAdmin: storedUser
     ? JSON.parse(storedUser).email.endsWith('@intimetec.com')
     : false,
-  userEmail: storedUser ? JSON.parse(storedUser).email : null,
+  userEmail: storedUser ? JSON.parse(storedUser).email : '',
 };
 
 export const login = createAsyncThunk<
@@ -100,30 +102,30 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       state.isAuthenticated = false;
-      state.user = null;
-      state.token = null;
-      state.error = null;
+      state.user = { name: '', email: '', password: '', id: '' };
+      state.token = '';
+      state.error = '';
       state.isAdmin = false;
-      state.userEmail = null;
+      state.userEmail = '';
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
-        state.error = null;
+        state.error = '';
       })
+
       .addCase(
         login.fulfilled,
         (state, action: PayloadAction<IAuthResponse>) => {
           state.isAuthenticated = true;
           state.user = action.payload.user;
           state.token = action.payload.token;
-          state.error = null;
+          state.error = '';
           state.userEmail = action.payload.user.email;
           state.isAdmin =
-            action.payload.user.idAdmin !== undefined
-              ? action.payload.user.idAdmin
-              : action.payload.user.email.endsWith('@intimetec.com');
+            action.payload.user.idAdmin ??
+            action.payload.user.email.endsWith('@intimetec.com');
           localStorage.setItem('user', JSON.stringify(action.payload.user));
         }
       )
@@ -134,20 +136,20 @@ const authSlice = createSlice({
         }
       )
       .addCase(signup.pending, (state) => {
-        state.error = null;
+        state.error = '';
       })
+
       .addCase(
         signup.fulfilled,
         (state, action: PayloadAction<IAuthResponse>) => {
           state.isAuthenticated = true;
           state.user = action.payload.user;
           state.token = action.payload.token;
-          state.error = null;
+          state.error = '';
           state.userEmail = action.payload.user.email;
           state.isAdmin =
-            action.payload.user.idAdmin !== undefined
-              ? action.payload.user.idAdmin
-              : action.payload.user.email.endsWith('@intimetec.com');
+            action.payload.user.idAdmin ??
+            action.payload.user.email.endsWith('@intimetec.com');
           localStorage.setItem('user', JSON.stringify(action.payload.user));
         }
       )

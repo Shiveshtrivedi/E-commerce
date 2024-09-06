@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { IProduct } from '../../utils/interface/types';
-import { ISearchState } from '../../utils/interface/types';
+import { IProduct ,ISearchState} from '../../utils/type/types';
 
 const initialState: ISearchState = {
   searchTerm: '',

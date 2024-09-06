@@ -4,7 +4,7 @@ import { AppDispatch } from '../redux/store';
 import { addProduct, addProductToHistory } from '../redux/slices/productSlice';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { TCategoryFilter } from '../utils/interface/types';
+import { TCategoryFilter } from '../utils/type/types';
 
 const FormContainer = styled.div`
   padding: 20px;

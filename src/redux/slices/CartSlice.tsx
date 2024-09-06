@@ -3,10 +3,10 @@ import {
   saveCartToCookies,
   saveOrdersToCookies,
   getOrdersFromCookies,
-} from '../../utils/CookieUtils';
-import { ICartItem, ICartState, IOrder } from '../../utils/interface/types';
+} from '../../utils/cookie/cookieUtils';
+import { ICartItem, ICartState, IOrder } from '../../utils/type/types';
 
-const loadCartFromStorage = (userId: string | null) => {
+const loadCartFromStorage = (userId: string) => {
   if (userId) {
     const localStorageCart = localStorage.getItem(`cart_${userId}`);
     if (localStorageCart) {
@@ -17,10 +17,10 @@ const loadCartFromStorage = (userId: string | null) => {
 };
 
 const initialState: ICartState = {
-  items: loadCartFromStorage(null),
+  items: loadCartFromStorage(''),
   totalAmount: parseFloat(localStorage.getItem('totalAmount') ?? '0'),
   totalItems: 0,
-  userId: null,
+  userId: '',
 };
 
 const cartSlice = createSlice({

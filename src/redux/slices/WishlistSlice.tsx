@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   saveWishlistToCookies,
   getWishlistFromCookies,
-} from '../../utils/CookieUtils';
-import { IWishListItem, IWishListState } from '../../utils/interface/types';
+} from '../../utils/cookie/cookieUtils';
+import { IWishListItem, IWishListState } from '../../utils/type/types';
 
 const initialState: IWishListState = {
   items: [],
-  userId: null,
+  userId: '',
 };
 
 const wishListSlice = createSlice({

@@ -5,13 +5,12 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IReview } from '../../utils/interface/types';
-import { IReviewsState } from '../../utils/interface/types';
+import { IReview, IReviewsState } from '../../utils/type/types';
 
 const initialState: IReviewsState = {
   reviews: [],
   averageRatings: {},
-  error: null,
+  error: '',
 };
 
 const API_URL = process.env.REACT_APP_USER_API_URL ?? '';
@@ -49,14 +48,14 @@ const reviewSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchReviews.pending, (state) => {
-        state.error = null;
+        state.error = '';
       })
       .addCase(
         fetchReviews.fulfilled,
         (state, action: PayloadAction<IReview[]>) => {
           state.reviews = action.payload;
-          state.error = null;
-          const productId = action.payload[0]?.productId; // Assuming all reviews belong to the same product
+          state.error = '';
+          const productId = action.payload[0]?.productId;
           if (productId) {
             const productReviews = state.reviews.filter(
               (review) => review.productId === productId
@@ -79,13 +78,13 @@ const reviewSlice = createSlice({
         }
       )
       .addCase(postReview.pending, (state) => {
-        state.error = null;
+        state.error = '';
       })
       .addCase(
         postReview.fulfilled,
         (state, action: PayloadAction<IReview>) => {
           state.reviews.push(action.payload);
-          state.error = null;
+          state.error = '';
 
           const productId = action.payload.productId;
           const productReviews = state.reviews.filter(

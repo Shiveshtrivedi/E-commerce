@@ -4,7 +4,7 @@ import { logout } from '../redux/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import Loading from './loading';
-import { EStatus } from '../utils/interface/types';
+import { EStatus } from '../utils/type/types';
 
 const LogoutButton: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
