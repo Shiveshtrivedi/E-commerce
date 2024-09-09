@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import './styles/global.css';
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/privateRoute';
-import LoginPage from './pages/loginPage';
 import SignupPage from './pages/signupPage';
 import ProfilePage from './pages/profilePage';
 import ProductList from './components/productList';
@@ -25,6 +24,7 @@ import SuccessTickAnimation from './components/successTickAnimation';
 import { useDispatch } from 'react-redux';
 import PaymentPage from './pages/paymentPage';
 import NotFoundPage from './components/pageNotFound';
+import LoginPage from './pages/loginPage';
 
 function App() {
   const dispatch = useDispatch();

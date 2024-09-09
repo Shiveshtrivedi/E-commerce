@@ -47,5 +47,5 @@ jobs:
       - name: Install Husky
         run: npx husky install
 
-      - name: Run tests 
+      - name: Run tests
         run: npm run test
