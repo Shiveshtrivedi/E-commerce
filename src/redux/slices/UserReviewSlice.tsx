@@ -67,7 +67,7 @@ const reviewSlice = createSlice({
             const averageRating = productReviews.length
               ? totalRating / productReviews.length
               : 0;
-            state.averageRatings[productId] = averageRating; 
+            state.averageRatings[productId] = averageRating;
           }
         }
       )

@@ -7,7 +7,7 @@ import reviewReducer from './slices/userReviewSlice';
 import searchReducer from './slices/searchSlice';
 import orderReducer from './slices/orderSlice';
 
- const store = configureStore({
+const store = configureStore({
   reducer: {
     products: productReducer,
     auth: authReducer,
