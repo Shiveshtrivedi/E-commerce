@@ -4,14 +4,14 @@ import cartReducer, {
   removeToCart,
   clearCart,
   setUserId,
-} from '../../redux/slices/cartSlice';
+} from '../redux/slices/cartSlice';
 import {
   initialCartState,
   mockCartItem,
   newCartItem,
-} from '../mockData/mockData';
+} from './mockData/mockData';
 
-jest.mock('../../utils/cookie/cookieUtils', () => ({
+jest.mock('../utils/cookie/cookieUtils', () => ({
   saveOrdersToCookies: jest.fn(),
   saveCartToCookies: jest.fn(),
   getOrdersFromCookies: jest.fn(() => []),

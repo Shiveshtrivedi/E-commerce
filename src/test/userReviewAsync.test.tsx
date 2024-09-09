@@ -4,9 +4,9 @@ import reviewReducer, {
   postReview,
   selectAverageRating,
   selectReviewsForProduct,
-} from '../../redux/slices/userReviewSlice';
+} from '../redux/slices/userReviewSlice';
 import axios from 'axios';
-import { mockReview, mockReviews } from '../mockData/mockData';
+import { mockReview, mockReviews } from './mockData/mockData';
 
 jest.mock('axios');
 

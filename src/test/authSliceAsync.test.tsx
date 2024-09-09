@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import axios from 'axios';
-import authReducer, { login, signup } from '../../redux/slices/authSlice';
-import { mockAdminUser, mockSignupUser, mockUser } from '../mockData/mockData';
+import authReducer, { login, signup } from '../redux/slices/authSlice';
+import { mockAdminUser, mockSignupUser, mockUser } from './mockData/mockData';
 
 jest.mock('axios');
 

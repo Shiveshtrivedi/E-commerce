@@ -3,8 +3,8 @@ import wishlistReducer, {
   addToWishList,
   removeToWishList,
   setUserId,
-} from '../../redux/slices/wishlistSlice';
-import { mockWishListItem } from '../mockData/mockData';
+} from '../redux/slices/wishlistSlice';
+import { mockWishListItem } from './mockData/mockData';
 
 describe('wishlistSlice', () => {
   const store = configureStore({ reducer: { wishlist: wishlistReducer } });

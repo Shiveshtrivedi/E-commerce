@@ -4,9 +4,9 @@ import productReducer, {
   addProduct,
   deleteProduct,
   fetchProductsByCategory,
-} from '../../redux/slices/productSlice';
+} from '../redux/slices/productSlice';
 import axios from 'axios';
-import { initialProductState, mockProduct } from '../mockData/mockData';
+import { initialProductState, mockProduct } from './mockData/mockData';
 
 jest.mock('axios');
 

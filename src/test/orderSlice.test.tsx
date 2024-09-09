@@ -2,11 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import orderReducer, {
   initializeOrders,
   addOrder,
-} from '../../redux/slices/orderSlice';
-import * as CookieUtils from '../../utils/cookie/cookieUtils';
-import { mockOrder } from '../mockData/mockData';
+} from '../redux/slices/orderSlice';
+import * as CookieUtils from '../utils/cookie/cookieUtils';
+import { mockOrder } from './mockData/mockData';
 
-jest.mock('../../utils/cookie/cookieUtils');
+jest.mock('../utils/cookie/cookieUtils');
 
 describe('orderSlice', () => {
   const mockOrdersFromCookies = [mockOrder];

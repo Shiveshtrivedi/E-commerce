@@ -1,9 +1,9 @@
-import authReducer, { logout } from '../../redux/slices/authSlice';
+import authReducer, { logout } from '../redux/slices/authSlice';
 import {
   emptyMockUser,
   initialAuthState,
   initialAuthStateForAdmin,
-} from '../mockData/mockData';
+} from './mockData/mockData';
 
 describe('authSlice', () => {
   test('handle logout', () => {

@@ -14,6 +14,7 @@ const config: JestConfigWithTsJest = {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
   transformIgnorePatterns: ["node_modules/(?!axios)"],
+  
 };
 
 export default config;

@@ -3,8 +3,8 @@ import searchReducer, {
   setSearchTerm,
   setSearchResults,
   clearSearchResults,
-} from '../../redux/slices/searchSlice';
-import { mockSearchResults } from '../mockData/mockData';
+} from '../redux/slices/searchSlice';
+import { mockSearchResults } from './mockData/mockData';
 
 describe('searchSlice', () => {
   const store = configureStore({ reducer: { search: searchReducer } });

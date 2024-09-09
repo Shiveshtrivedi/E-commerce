@@ -5,15 +5,15 @@ import productReducer, {
   removeProductFromHistory,
   clearHistory,
   resetFilter,
-} from '../../redux/slices/productSlice';
-import { saveAdminHistoryToCookies } from '../../utils/cookie/cookieUtils';
+} from '../redux/slices/productSlice';
+import { saveAdminHistoryToCookies } from '../utils/cookie/cookieUtils';
 import {
   initialProductState,
   mockProduct,
   newProduct,
-} from '../mockData/mockData';
+} from './mockData/mockData';
 
-jest.mock('../../utils/cookie/cookieUtils', () => ({
+jest.mock('../utils/cookie/cookieUtils', () => ({
   saveAdminHistoryToCookies: jest.fn(),
   getAdminHistoryFromCookies: jest.fn(() => []),
 }));
